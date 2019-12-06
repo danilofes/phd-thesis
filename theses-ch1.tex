@@ -1,0 +1,151 @@
+\chapter{Introduction}
+\label{ChIntro}
+
+
+\section{Problem and Motivation}
+\label{SecMotivation}
+
+Refactoring is the process of improving the design of an existing code base, 
+without changing its behavior~\citep{Opdyke:1992}.
+Since the beginning, the adoption of refactoring practices was fostered by the availability of refactoring catalogues, as the one proposed by \cite{Fowler:1999}.
+These catalogues define a name and describe the mechanics of common refactoring operations,
+as well as demonstrate its application through some code examples.
+For example, \emph{Extract Method} is a well-known refactoring which consists in turning a code fragment that can be grouped together into a new method, usually to decompose a large and complex method or to eliminate code duplication.
+As a second example, \emph{Move Method} consists in moving a method from one class to another one, usually because it is more related to features of another class than the class on which it is defined.
+
+There are strong evidences that refactoring
+% is a well-known technique and that it 
+is widely adopted by development teams.
+In fact, it is considered one of the pillars of agile development methodologies.
+For example, Extreme Programming (XP)~\citep{Beck:1999} and Test Driven Development (TDD)~\citep{Beck:2003} advocate the use of refactoring as an essential step in a software development cycle.
+Moreover, refactoring is not only discussed in theory, but also observed in practice, as there are several empirical studies that report and discuss refactoring activity found on real software projects~\citep{MurphyHill2012, tsantalis_empiricalstudy, Kim:2012:FSE, kim-tse-2014, negara2013}.
+In addition, some types of refactoring are applied so often that mainstream development environments, such as Eclipse, IntelliJ IDEA, NetBeans, and Visual Studio, provide some sort of automated support to apply them.
+All these facts corroborate to the argument that refactoring is an important and well-known technique.
+
+Given that refactoring is an essential aspect of the software development workflow, it is also a key factor to understand software evolution.
+As such, researchers have investigated refactoring activity to study several questions: how and when developers refactor~\citep{MurphyHill2012}, the impact of refactoring on code quality~\citep{Kim:2012:FSE, kim-tse-2014}, the challenges of refactoring~\citep{Kim:2012:FSE, kim-tse-2014}, the risks of refactoring~\citep{Kim:2012:FSE, kim-tse-2014, Kim:2011, Weissgerber:2006, bavota2012does, ferreira2018buggy}, and the relationship between refactoring and merge conflicts~\citep{mahmoudi2019refactorings}.
+
+Neverthless, some questions still need to be further investigated.
+In particular, the motivations behind refactorings are not thoroughly investigated by existing empirical studies.
+For example, \cite{Fowler:1999} describes typical reasons or code smells that motivates each refactoring, but there are no studies verifying that these are the actual motivations for the refactorings applied in practice.
+Moreover, there may be other motivations driving refactorings other than those  documented in refactoring catalogues.
+Although existing studies interview professional software developers asking the reasons that motivate their refactoring activities~\citep{kim-tse-2014, Wang:2009}, they discuss the issue in a broader manner.
+
+In fact, empirical studies that investigates actual refactorings applied in source code are challenging, because refactoring information is not readily available.
+For example, suppose that we intend to study the correlation between refactorings and defects on a software component. 
+Many software teams document fixed bugs in issue tracking systems, but we could only correlate them with refactorings if we have a history of refactoring activity in the defective code.
+Such information is usually not documented, and would need to be inferred from the code changes.
+If we incorrectly classify code changes as refactoring, or if we fail to find existing refactorings, the conclusions we drawn might be incorrect.
+In summary, the feasibility of such studies depends on some technique to identify refactoring activity, and the validity of their findings depends on how reliable such technique is.
+Thus, refactoring information is valuable to study software evolution.
+
+Unfortunately, obtaining refactoring information from version histories is a non-trivial task, for three main reasons:
+\begin{enumerate}
+\item Refactorings are rarely documented.
+Thus, approaches that search for a predefined set of terms in commit messages, such as the one proposed by \cite{ratzinger2008relation}, suffer from low recall.
+%Therefore, using commit messages or release notes to assess whether a software component went through refactoring is not reliable.
+For example, in a study using Eclipse and Mylyn version histories,
+\cite{MurphyHill2012} found refactorings in 19 out of 40 commits whose messages did not contain any of the refactoring indicator keywords proposed by \cite{ratzinger2008relation}.
+Moreover, in a study with JHotDraw and Apache Common Collections version histories, \cite{Soares:2013} reported a recall of only 16\% when using the approach proposed by \cite{ratzinger2008relation} to find refactorings.
+
+\item Refactorings are performed interleaved with feature additions and bug fixes~\citep{MurphyHill2012}.
+Thus, analyzing code changes to find refactorings is challenging, because code elements may have changed due to refactoring and to other types of code changes simultaneously.
+For example, a developer may add more code to an existing method to implement a new feature, and then decide to move it to another class that is more related to it.
+Identifying that the method has been moved is more challenging in this case, because it is not identical to its original version.
+In fact, existing approaches that detect refactorings by analyzing code changes have precision and recall issues when used in practice.
+For example, in a study conducted by \cite{Soares:2013}, Ref-Finder~\citep{Prete:2010,Kim:2010:RefFinder}, one well-known refactoring detection approach, achieved only 35\% of precision and 24\% of recall.
+
+\item Refactorings are not always performed using automated support.
+Therefore, even if we monitor refactoring tools usage, we may miss a significant portion of the refactoring activity.
+For example, \cite{MurphyHill2012} report that several refactorings found in their study using Eclipse and Mylyn data (89\% and 91\%, respectively) were not found in the refactoring tool usage logs they collected, suggesting that they were performed manually.
+As a second example, in a study using data collected from 23 developers, \cite{negara2013} found that more than half of the refactorings were performed manually.
+\end{enumerate}
+
+Despite the aforementioned difficulties, it is important that we develop reliable and efficient approaches that are able to mine refactorings from version histories.
+The large amount of open source repositories available on platforms such as GitHub offers huge potential for empirical studies on refactoring practice, enabling researchers to verifying previous findings and investigating new research questions.
+Moreover, such approaches have great potential for practical application in code reviewing, code merging, and tracking code evolution.
+
+
+
+\section{Proposed Thesis}
+\label{ProposedThesis}
+
+In this thesis, we developed four main studies, which can be grouped in two research lines.
+In the first research line, we investigate an overarching question: \emph{Why developers refactor}.
+To answer that question, we performed two empirical studies.
+
+In \textbf{Study~1}, we investigated the relationship between Extract Method refactoring and code reuse.
+Although Extract Method is usually associated with code smells such as \emph{Long method}~\citep{Fowler:1999}, empirical studies suggests that it serves multiple porposes~\citep{tsantalis_empiricalstudy}.
+In particular, we suspected that code reuse could be one important motivation for Extract Method. Thus, we proposed three research questions: (i) \emph{How often is Extract Method motivated by code reuse}; (ii) \emph{How often is Extract Method motivated by removing duplicate code}; and (iii) \emph{How often does Extract Method favors code reuse}.
+To answer these questions, we mined Extract Method refactorings from 10 open source Java repositories using an adapted version of Refactoring Miner, an existing refactoring detection tool~\citep{tsantalis_empiricalstudy}, and also gathered information of method invocations along the entire history of the studies projects.
+As result, we found that in 56.9\% of the cases Extract Method is motivated by code reuse. Additionally, 7.9\% of the cases are motivated by removing duplication, and 4.8\% of the cases are not motivated by code reuse, but enables reuse in future modifications of the system.
+
+In \textbf{Study~2}, we investigated the motivations for refactorings applied to open source systems based on feedback from the developers who did the refactorings.
+This time, we extended the analysis to 12 well-known refactoring types: Move Class/Method/Attribute, Extract Method, Inline Method, Pull Up Method/Attribute, Push Down Method/Attribute, Rename Package, and Extract Superclass/Interface.
+Specifically, we monitored 124 Java repositories hosted on GitHub to detect recently applied refactorings, and asked the developers to explain the reasons behind their decision to refactor the code.
+We developed an automated workflow based on Refactoring Miner that was capable of identifying applied refactorings in a daily basis, enabling us to contact developers in a timely manner, while the refactoring was still fresh in their minds.
+By applying thematic analysis on the collected responses, we compiled a catalogue of 44 distinct motivations for the 12 studies refactoring types.
+In summary, we found that refactoring effort is mainly driven by changes in the requirements and much less by code smells.
+In particular, we found that Extract Method is the most versatile refactoring operation, serving 11 different purposes.
+Additionally, we also gathered insightful information about the usage of refactoring tools. For examples, we found evidence that the IDE used by the developers affects the adoption of automated refactoring tools.
+
+
+After our experience with the aforementioned studies, we felt the need for improving refactoring detection approaches.
+For example, in Study~2, we manually evaluated each refactoring identified by our tool set, and found out that 37\% of them were false positives (i.e., we achieved 63\% of precision).
+For that reason, we initiated a second line of research, focused on improving the state-of-the-art on refactoring detection approaches.
+%To answer that question, we performed two empirical studies.
+
+In \textbf{Study~3}, we introduced RefDiff, a novel refactoring detection approach, whose main goal was to improve improve precision over existing tools.
+Our approach employs a combination of heuristics based on static analysis and code
+similarity to detect 13 well-known refactoring types.
+One of its distinguishing features is using an adaptation of the classical TF-IDF similarity measure from information retrieval to compute code similarity.
+We evaluated precision and recall of our tool using an oracle of known refactorings applied by students, and compared it three existing approaches, namely Refactoring Miner~\citep{tsantalis_empiricalstudy}, Refactoring Crawler~\citep{dig2006automated}, and Ref-Finder~\citep{Kim:2010:RefFinder}.
+As result, our approach achieved 100\% of precision and 88\% of recall, surpassing the three tools subjected to the comparison.
+
+Later, in \textbf{Study~4}, we proposed an improved version of our tool, named as RefDiff 2.0.
+Besides introducing improvements to our detection heuristics, we redesigned RefDiff to support multiple programming languages. Our revised refactoring detection algorithm relies on the Code Structure Tree (CST), a simple yet powerful representation of the source code that abstracts away the specificities of particular programming languages.
+Along with the core algorithm, we provide plugins for three programming languages: Java, JavaScript, and C.
+In this study, we also performed a large-scale evaluation of our tool using an  oracle of 3,248 real refactorings, applied across 538 commits from 185 open source Java repositories.
+This instance, we compared our tool with RMiner, which is an evolution of Refactoring Miner~\citep{tsantalis2018rminer} and the current state-of-the-art in Java refactoring detection.
+As result, RefDiff 2.0 achieves 96.4\% of precision and 80.4\% of recall.
+RefDiff's precision and recall is on par with RMiner (98.8\% of precision and 81.3\% of recall), which is a key achievement because our approach is not specialized in a single language.
+Moreover, our  evaluation  in  JavasScript  and  C  also showed promising results. RefDiff’s precision and recall are respectively 91\% and 88\% for JavaScript, and 88\% and 91\% for C.
+
+
+
+
+
+\section{Outline}
+\label{SecOutline}
+
+Three out of six chapters of this theses consists in studies published in software engineering conference and journals.
+Therefore, these chapters preserve the original structure of the manuscripts in order to facilitate independent read.
+We organized the remainder of this work as follows:
+%\begin{description}
+\\[6pt]
+
+\noindent\textbf{Chapter~\ref{ChCibse}: Investigating Extract Method Refactoring Associated with Code Reuse.} In this chapter we present \textbf{Study 1}, which investigates the relationship between Extract Method refactoring and code reuse. This chapter consists of a translated version of the following publication:
+\\[6pt]
+\noindent Silva, D., Valente, M. T., and Figueiredo, E. (2015) Um Estudo sobre Extração de Métodos para Reutilização de Código. In \emph{18th Conferencia Iberoamericana de Software Engineering (CIbSE) -- Experimental Software Engineering Track (ESELAW)}, pages~404--417.
+\\[6pt]
+
+\noindent\textbf{Chapter~\ref{ChFse}: An Empirical Study on Refactoring Motivations.} In this chapter we present \textbf{Study 2}, which investigates the motivations behind refactorings applied in 124 Java projects hosted on GitHub. This chapter consists of the following publication:
+\\[6pt]
+\noindent Silva, D., Tsantalis, N., and Valente, M. T. (2016) Why we refactor? confessions of GitHub contributors. In \emph{24th International Symposium on the Foundations of Software Engineering (FSE)}, pages 858--870.
+\\[6pt]
+
+\noindent\textbf{Chapter~\ref{ChTse}: Detecting Refactoring in Version Histories.} In this chapter, we present \textbf{Study 4}, which describes RefDiff, an approach to detect refactoring in version histories. Besides, we also present an evaluation of our tool in Java, JavaScript, and C projects. This chapter consists of the following study, currently under review:
+\\[6pt]
+\noindent Silva, D., Silva J. P., Santos, G., Terra, R., and Valente, M. T. (2019) RefDiff 2.0: A Multi-language RefactoringDetection Tool. Under review for \emph{IEEE Transactions on Software Engineering (TSE)}.
+\\[6pt]
+It is worth noting that this chapter is also based on the work from \textbf{Study 3} (superseded by Study~4), which corresponds to the following publication:
+\\[6pt]
+\noindent Silva, D. and Valente, M. T. (2017) RefDiff: Detecting Refactorings in Version Histories. In \emph{14th International Conference on Mining Software Repositories (MSR)}, pages 1--11.
+\\[6pt]
+
+\noindent\textbf{Chapter~\ref{ChPracticalApplications}: Practical Applications of Refactoring Detection.} In this chapter, we describe practical problems that could benefit from refactoring detection approaches, such as RefDiff.
+\\[6pt]
+
+\noindent\textbf{Chapter~\ref{ChConclusion}: Conclusion.} This final chapter concludes the thesis and gives suggestions for future research.
+
+%\end{description}

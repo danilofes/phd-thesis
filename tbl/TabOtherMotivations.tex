@@ -1,0 +1,47 @@
+\begin{tabular}{@{}lp{5cm}p{12cm}r@{}} \toprule
+Type & Theme & Description & \multicolumn{1}{c@{}}{Occur.}\\
+\midrule
+MC & Move class to appropriate container & Move a class to a package that is more functionally or conceptually relevant. & \minibarn{13}{15} \\
+MC & Introduce sub-package & Move a group of related classes to a new subpackage. & \minibarn{7}{15} \\
+MC & Convert to top-level container & Convert an inner class to a top-level class to broaden its scope. & \minibarn{4}{15} \\
+MC & Remove inner classes from deprecated container & Move an inner class out of a class that is marked deprecated or is being removed. & \minibarn{3}{15} \\
+MC & Remove from public API & Move a class from a package that contains external API to an internal package, avoiding its unnecessary public exposure. & \minibarn{2}{15} \\
+MC & Convert to inner class & Convert a top-level class to an inner class to narrow its scope. & \minibarn{2}{15} \\
+MC & Eliminate dependencies & Move a class to another package to eliminate undesired dependencies between modules. & \minibarn{1}{15} \\
+MC & Eliminate redundant sub-package & Eliminate a redundant nesting level in the package structure. & \minibarn{1}{15} \\
+MC & Backward compatibility & Move a class back to its original package to maintain backward compatibility. & \minibarn{1}{15} \\
+\midrule
+MA & Move attribute to appropriate class & Move an attribute to a class that is more functionally or conceptually relevant. & \minibarn{15}{15} \\
+MA & Remove duplication & Move similar attributes to another class where a single copy of them can be shared, eliminating the duplication. & \minibarn{4}{15} \\
+\midrule
+RP & Improve package name & Rename a package to better represent its purpose. & \minibarn{8}{15} \\
+RP & Enforce naming consistency & Rename a package to conform to project's naming conventions. & \minibarn{3}{15} \\
+RP & Move package to appropriate container & Move a package to a parent package that is more functionally or conceptually relevant. & \minibarn{2}{15} \\
+\midrule
+MM & Move method to appropriate class & Move a method to a class that is more functionally or conceptually relevant. & \minibarn{8}{15} \\
+MM & Move method to enable reuse & Move a method to a class that permits its reuse by other classes. & \minibarn{3}{15} \\
+MM & Eliminate dependencies & Move a method to eliminate dependencies between classes. & \minibarn{3}{15} \\
+MM & Remove duplication & Move similar methods to another class where a single copy of them can be shared, eliminating duplication. & \minibarn{1}{15} \\
+MM & Enable overriding & Move a method to permit subclasses to override it. & \minibarn{1}{15} \\
+\midrule
+IM & Eliminate unnecessary method & Inline and eliminate a method that is unnecessary or has become too trivial after code changes. & \minibarn{13}{15} \\
+IM & Caller becomes trivial & Inline and eliminate a method because its caller method has become too trivial after code changes, so that it can absorb the logic of the inlined method without compromising readability. & \minibarn{2}{15} \\
+IM & Improve readability & Inline a method because it is easier to understand the code without the method invocation. & \minibarn{1}{15} \\
+\midrule
+ES & Extract common state/behavior & Introduce a new superclass that contains common state or behavior from its subclasses. & \minibarn{7}{15} \\
+ES & Eliminate dependencies & Introduce a new superclass that is decoupled from specific dependencies of a subclass. & \minibarn{1}{15} \\
+ES & Decompose class & Extract a superclass from a class that holds many responsibilities. & \minibarn{1}{15} \\
+\midrule
+PUM & Move up common methods & Move common methods to superclass. & \minibarn{8}{15} \\
+\midrule
+PUA & Move up common attributes & Move common attributes to superclass. & \minibarn{7}{15} \\
+\midrule
+EI & Facilitate extension & Introduce an interface to enable different behavior. & \minibarn{1}{15} \\
+EI & Enable dependency injection & Introduce an interface to facilitate the use of a dependency injection framework. & \minibarn{1}{15} \\
+EI & Eliminate dependencies & Introduce an interface to avoid depending on an existing class/interface. & \minibarn{1}{15} \\
+\midrule
+PDA & Specialized implementation & Push down an attribute to allow specialization by subclasses. & \minibarn{2}{15} \\
+PDA & Eliminate dependencies & Push down attribute to subclass so that the superclass does not depend on a specific type. & \minibarn{1}{15} \\
+\midrule
+PDM & Specialized implementation & Push down a method to allow specialization by subclasses. & \minibarn{1}{15} \\
+\bottomrule \end{tabular}

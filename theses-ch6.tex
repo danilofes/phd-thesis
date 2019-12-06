@@ -1,0 +1,22 @@
+
+\chapter{Conclusion}
+\label{ChConclusion}
+
+
+\section{Contributions}
+\label{SecContributions}
+
+The contributions achieved so far can be summarized as follows:
+\begin{enumerate}
+\item \textbf{A large scale study of the motivations behind refactoring}.
+We employed an adaptation of an existing refactoring detection tool to monitor refactoring activity on \totalProjects Java projects hosted on GitHub. Whenever we found recent refactorings, we asked the developers who applied them to explain the reasons behind their decision to refactor the code.
+By applying thematic analysis on the collected responses,
+we compiled a catalogue of \totalMotivationThemes distinct motivations for \refactoringTypes well-known refactoring types.
+Moreover, we also investigated the frequency of each refactoring type, the usage of refactoring tools, and how the IDE affects refactoring tools usage.
+
+\item \textbf{A new approach to mine refactoring in version histories}.
+Based on the experience gained in the first study, we propose RefDiff, a novel automated approach that identifies refactorings performed between two code revisions in a git repository. 
+RefDiff employs a combination of heuristics based on static analysis and code similarity to detect 13 well-known refactoring types.
+In an evaluation using an oracle of 448 known refactoring operations, distributed across seven Java projects, our approach achieved precision of 100\% and recall of 88\%.
+Moreover, our evaluation suggests that RefDiff has superior precision and recall than existing state-of-the-art approaches.
+\end{enumerate}

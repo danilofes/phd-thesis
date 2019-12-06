@@ -1,0 +1,184 @@
+\documentclass[phd]{ppgccufmg} % ou [msc] para dissertações
+% de mestrado. Para propostas ou
+% projetos, usar [phd,project],
+% [msc,proposal], etc.
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{type1ec}
+
+\usepackage{graphicx}
+\usepackage[square]{natbib} % permite citações naturalmente integradas ao texto
+
+
+
+%\usepackage{array}
+\usepackage{subcaption}
+
+\usepackage{xspace}
+
+\newcommand{\mcode}[1]{$\mathtt{#1}$} 
+\newcommand{\quotes}[1]{``#1''}
+\newcommand{\margin}[0]{\\[-0.3cm]}
+
+\newcommand{\totalProjects}[0]{748\xspace}
+\newcommand{\activeProjects}[0]{471\xspace}
+\newcommand{\activeProjectsPercentage}[0]{63\%}
+\newcommand{\refactoredProjects}[0]{285\xspace}
+\newcommand{\refactoredProjectsPercentage}[0]{38\%}
+\newcommand{\studiedProjects}[0]{124\xspace}
+\newcommand{\studiedProjectsPercentage}[0]{17\%}
+\newcommand{\studiedDevelopers}[0]{222\xspace}
+\newcommand{\toolName}[0]{RefactoringMiner\xspace}
+\newcommand{\refactoringTypes}[0]{12\xspace}
+\newcommand{\totalMotivationThemes}[0]{44\xspace}
+\newcommand{\detectedRefactorings}[0]{2,241\xspace}
+\newcommand{\studiedRefactorings}[0]{463\xspace}
+\newcommand{\commitsWithTruePositiveRefactoring}[0]{539\xspace}
+\newcommand{\commitsWithDetectedRefactoring}[0]{729\xspace}
+\newcommand{\commitsWithRefactoringAndResponse}[0]{222\xspace} % should be equal to variable studiedDevelopers
+
+
+\usepackage[english,bookmarks=true,bookmarksnumbered=true,linktocpage,colorlinks=true,citecolor=black,urlcolor=black,linkcolor=black,filecolor=black]{hyperref}
+
+\usepackage{minibar}
+
+\usepackage{multicol}
+
+
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+
+
+\DeclareMathOperator{\rmname}{name}
+\DeclareMathOperator{\rmcont}{\pi}
+\DeclareMathOperator{\rmsig}{sig}
+\DeclareMathOperator{\rmsub}{subtype}
+\DeclareMathOperator{\rmsuper}{supertype}
+\DeclareMathOperator{\rmsubsuper}{subOrSuper}
+\DeclareMathOperator{\rmtype}{type}
+\DeclareMathOperator{\rmsim}{sim}
+\DeclareMathOperator{\rmsimu}{sim_{p}}
+\DeclareMathOperator{\rmunmatched}{unmatched}
+\DeclareMathOperator{\rmmatched}{matched}
+\DeclareMathOperator{\rmcallers}{callers}
+
+\DeclareMathOperator{\tp}{tp}
+\DeclareMathOperator{\fp}{fp}
+\DeclareMathOperator{\fn}{fn}
+\DeclareMathOperator{\precision}{precision}
+\DeclareMathOperator{\recall}{recall}
+
+
+\usepackage{algpseudocode}
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{courier}
+\definecolor{javablue}{rgb}{0.25,0,1} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\lstset{
+language=Java,
+basicstyle=\footnotesize\ttfamily,
+breaklines=true,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javablue},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{/**}{*/},
+tabsize=2,
+frame=single}
+
+
+\definecolor{darkgray}{RGB}{90,90,90}
+\definecolor{lightgray}{RGB}{210,210,210}
+\newcommand\xbar[1]{#1 {\color{darkgray} \rule{\dimexpr #1pt * 16}{5.5pt}}{\color{lightgray} \rule{\dimexpr 16pt - (#1pt * 16)}{5.5pt}}}
+
+\newcommand\xbard[3]{#1/#2 {\color{darkgray} \rule{\dimexpr #3pt * 16}{5.5pt}}{\color{lightgray} \rule{\dimexpr 16pt - (#1pt * 16)}{5.5pt}}}
+
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+\newcommand{\codeinl}[1]{%
+  \begingroup
+  \setlength{\fboxsep}{2pt}%
+  \mbox{\vphantom{#1}\smash{\colorbox{codegray}{\texttt{#1}}}}%
+  \endgroup
+}
+
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+
+
+
+\DeclareMathOperator{\rdname}{name}
+\DeclareMathOperator{\rdparent}{\pi}
+\DeclareMathOperator{\rdsig}{id}
+\DeclareMathOperator{\rdns}{ns}
+\DeclareMathOperator{\rdsub}{subtype}
+\DeclareMathOperator{\rdtype}{nType}
+\DeclareMathOperator{\rdsim}{sim}
+\DeclareMathOperator{\rdnsim}{nameSim}
+\DeclareMathOperator{\rdsimx}{sim_{x}}
+\DeclareMathOperator{\rdsimi}{sim_{i}}
+\DeclareMathOperator{\rdsimc}{sim_{\subseteq}}
+\DeclareMathOperator{\rduses}{uses}
+\DeclareMathOperator{\rdchildren}{childr}
+\DeclareMathOperator{\rdsortbysim}{sortBySim}
+
+\DeclareMathOperator{\rdSame}{Same}
+\DeclareMathOperator{\rdConvertType}{ConvertType}
+\DeclareMathOperator{\rdExtract}{Extract}
+\DeclareMathOperator{\rdExtractSuper}{ExtractSuper}
+\DeclareMathOperator{\rdInline}{Inline}
+\DeclareMathOperator{\rdrank}{\mathit{rank}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+
+
+
+
+
+\begin{document}
+
+\ppgccufmg{
+	title={Mining Refactorings from Version Histories: Studies, Tools, and Applications},
+	authorrev={e Silva, Danilo Ferreira},
+	university={Federal University of Minas Gerais},
+	course={Computer Science},
+	portuguesetitle={Mining Refactorings from Version Histories: Studies, Tools, and Applications},
+	portugueseuniversity={Universidade Federal de Minas Gerais},
+	portuguesecourse={Ciência da Computação},
+	address={Belo Horizonte},
+	date={2019-12},
+	advisor={Marco Túlio de Oliveira Valente},
+	%approval={img/approvalsheet.eps},
+	%abstract=[brazil]{Resumo}{resumo},
+	abstract=[english]{Abstract}{abstract},
+	keywords={Refactoring},
+	%dedication={dedicatoria},
+	%ack={agradecimentos},
+	%epigraphtext={Truth and lie are opposite things.}{Unknown},
+}
+
+\input{theses-ch1.tex}
+\input{theses-ch2.tex}
+\input{theses-ch3.tex}
+\input{theses-ch4.tex}
+\input{theses-ch5.tex}
+\input{theses-ch6.tex}
+
+
+
+\ppgccbibliography{references}
+% apêndices, se houver
+
+\end{document}
+
+

@@ -1,0 +1,15 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{minibar}[2017/02/20 v1.0 Plot mini bars to use inside tables]
+
+\RequirePackage{color}
+
+\newdimen\minibarwidth
+\minibarwidth=20pt
+\definecolor{minibardark}{RGB}{90,90,90}
+\definecolor{minibarlight}{RGB}{210,210,210}
+
+\newcommand\minibar[1]{#1 \setlength{\fboxsep}{0pt}\colorbox{minibarlight}{\makebox[\minibarwidth][l]{\color{minibardark} \rule{#1\dimexpr \minibarwidth}{0.65\dimexpr \f@size pt}}}}
+
+\newcommand\minibard[2]{#1 \setlength{\fboxsep}{0pt}\colorbox{minibarlight}{\makebox[\minibarwidth][l]{\color{minibardark} \rule{\dimexpr \minibarwidth * #1 / #2}{0.65\dimexpr \f@size pt}}}}
+
+\newcommand\minibarn[2]{#1 \makebox[\minibarwidth][l]{\color{minibardark} \rule{\dimexpr \minibarwidth * #1 / #2}{0.65\dimexpr \f@size pt}}}

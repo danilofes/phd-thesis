@@ -1,0 +1,14 @@
+\begin{tabular}{@{}p{4cm}p{8cm}r@{}} \toprule
+Theme & Description & \multicolumn{1}{c@{}}{Occur.}\\ \midrule
+Extract reusable method & Extract a piece of reusable code from a single place and call the extracted method in multiple places. &  \minibarn{43}{43} \\
+Introduce alternative method signature & Introduce an alternative signature for an existing method (e.g., with additional or different parameters) and make the original method delegate to the extracted one. &  \minibarn{25}{43} \\
+Decompose method to improve readability & Extract a piece of code having a distinct functionality into a separate method to make the original method easier to understand. &  \minibarn{21}{43} \\
+Facilitate extension & Extract a piece of code in a new method to facilitate the implementation of a feature or bug fix, by adding extra code either in the extracted method, or in the original method. &  \minibarn{15}{43} \\
+Remove duplication & Extract a piece of duplicated code from multiple places, and replace the duplicated code instances with calls to the extracted method. &  \minibarn{14}{43} \\
+Replace Method preserving backward compatibility & Introduce a new method that replaces an existing one to improve its name or remove unused parameters. The original method is preserved for backward compatibility, it is marked as deprecated, and delegates to the extracted one. &  \minibarn{6}{43} \\
+Improve testability & Extract a piece of code in a separate method to enable its unit testing in isolation from the rest of the original method. &  \minibarn{6}{43} \\
+Enable overriding & Extract a piece of code in a separate method to enable subclasses override the extracted behavior with more specialized behavior. &  \minibarn{4}{43} \\
+Enable recursion & Extract a piece of code to make it a recursive method. &  \minibarn{2}{43} \\
+Introduce factory method & Extract a constructor call (class instance creation) into a separate method. &  \minibarn{1}{43} \\
+Introduce async operation & Extract a piece of code in a separate method to make it execute in a thread. &  \minibarn{1}{43} \\
+\bottomrule \end{tabular}

@@ -1,0 +1,56 @@
+\begin{tabular}{@{}l@{}}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Relationship & \multicolumn{2}{@{}l}{Condition} \\
+\midrule
+& \multicolumn{2}{@{}l}{$(t_b, t_a) \in T_b \times T_a$, such that:}\\
+Same Type & & $\rmname(t_b) = \rmname(t_a) \land \rmcont(t_b) \sim \rmcont(t_a)$\\
+Rename Type & & $\rmname(t_b) \neq \rmname(t_a) \land \rmcont(t_b) \sim \rmcont(t_a) \land \rmsim(t_b, t_a) > \tau$\\
+Move Type   & & $\rmname(t_b) = \rmname(t_a) \land \rmcont(t_b) \nsim \rmcont(t_a) \land \rmsim(t_b, t_a) > \tau$\\
+Move and Rename Type & & $\rmname(t_b) \neq \rmname(t_a) \land \rmcont(t_b) \nsim \rmcont(t_a) \land \rmsim(t_b, t_a) > \tau$\\
+Extract Supertype & & $(\nexists x \in T_b\,|\,x \sim t_a) \land  (\exists y \in T_a\,|\,t_b \sim y \land \rmsub(y, t_a)) \land \rmsimu(t_a, t_b) > \tau$\\
+\addlinespace
+& \multicolumn{2}{@{}l}{$(m_b, m_a) \in M_b \times M_a$, such that:}\\
+Same Method & & $\rmsig(m_b) = \rmsig(m_a) \land \rmcont(m_b) \sim \rmcont(m_a)$\\
+Rename Method & & $\rmname(m_b) \neq \rmname(m_a) \land \rmcont(m_b) \sim \rmcont(m_a) \land \rmsim(m_b, m_a) > \tau$\\
+Change Method Signature & & $\rmname(m_b) = \rmname(m_a) \land \rmsig(m_b) \neq \rmsig(m_a) \land \rmcont(m_b) \sim \rmcont(m_a) \land \rmsim(m_b, m_a) > \tau$\\
+Pull Up Method & & $\rmsig(m_b) = \rmsig(m_a) \land \rmsub(\rmcont(m_b)^{\sim}, \rmcont(m_a)) \land \rmsim(m_b, m_a) > \tau$\\
+Push Down Method & & $\rmsig(m_b) = \rmsig(m_a) \land \rmsuper(\rmcont(m_b)^{\sim}, \rmcont(m_a)) \land \rmsim(m_b, m_a) > \tau$\\
+Move Method & & $\rmname(m_b) = \rmname(m_a) \land \rmcont(m_b) \nsim \rmcont(m_a) \land \neg \rmsubsuper(\rmcont(m_b)^{\sim}, \rmcont(m_a)) \land \rmsim(m_b, m_a) > \tau$\\
+Extract Method & & $(\nexists x \in M_b\,|\,x \sim m_a) \land (\exists y \in M_a\,|\,m_b \sim y \land y \in \rmcallers(m_a)) \land \rmsimu(m_a, m_b) > \tau$\\
+Inline Method & & $(\nexists x \in M_a\,|\,m_b \sim x) \land (\exists y \in M_b\,|\,y \sim m_a \land y \in \rmcallers(m_b)) \land \rmsimu(m_b, m_a) > \tau$\\
+\addlinespace
+& \multicolumn{2}{@{}l}{$(f_b, f_a) \in F_b \times F_a$, such that:}\\
+Same Field & & $\rmname(f_b) = \rmname(f_a) \land \rmtype(f_b) = \rmtype(f_a) \land \rmcont(f_b) \sim \rmcont(f_a)$\\
+Pull Up Field & & $\rmname(f_b) = \rmname(f_a) \land \rmtype(f_b) = \rmtype(f_a) \land \rmsub(\rmcont(f_b)^{\sim}, \rmcont(f_a)) \land \rmsim(f_b, f_a) > \tau$\\
+Push Down Field & & $\rmname(f_b) = \rmname(f_a) \land \rmtype(f_b) = \rmtype(f_a) \land \rmsuper(\rmcont(f_b)^{\sim}, \rmcont(f_a)) \land \rmsim(f_b, f_a) > \tau$\\
+Move Field & & $\rmname(f_b) = \rmname(f_a) \land \rmtype(f_b) = \rmtype(f_a) \land \rmcont(f_b) \nsim \rmcont(f_a) \land \neg \rmsubsuper(\rmcont(f_b)^{\sim}, \rmcont(f_a)) \land \rmsim(f_b, f_a) > \tau$\\
+\bottomrule
+\end{tabular}\\
+
+\vspace{0.4em}\\
+\begin{tabular}{@{}lll@{}}
+%\multicolumn{3}{c}{Legend}\\
+\midrule
+\begin{tabular}{@{}ll@{}}
+$\rmname(e)$ & simple name of a code entity $e$\\
+$\rmsig(m)$ & signature of a method $m$\\
+$\rmtype(f)$ & type of a field $f$\\
+$\rmsub(t_1, t_2)$ & $t_1$ is subtype of $t_2$\\
+$\rmsuper(t_1, t_2)$ & $t_1$ is supertype of $t_2$\\
+$\rmsubsuper(t_1, t_2)$ & $\rmsub(t_1, t_2) \lor \rmsuper(t_1, t_2)$\\
+\end{tabular}
+& &
+\begin{tabular}{@{}ll@{}}
+$\rmcont(e)$ & container entity of a code entity $e$ (it may be a type or a package)\\
+$e_1 \sim e_2$ & exists a matching relationship between $e_1$ and $e_2$\\
+$e_1 \nsim e_2$ & do not exists a matching relationship between $e_1$ and $e_2$\\
+$e^{\sim}$ & the code entity that matches with $e$ after the change\\
+$\rmcallers(m_a)$ & the set of methods that call $m_a$\\
+$\rmsim(e_1, e_2)$ & similarity index between $e_1$ and $e_2$\\
+$\rmsimu(e_1, e_2)$ & similarity index between $e_1$ and $e_2$ for non-matching relationships\\
+\end{tabular}
+\\
+\midrule
+\end{tabular}
+\end{tabular}
