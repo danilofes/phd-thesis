@@ -1,15 +1,19 @@
 
-%Refactoring is an well-known technique that is widely adopted by software engineers to improve the design of an existing code base.
+
+
 
 Refactoring is an important aspect of software development and a key factor to understand software evolution.
-As such, several existing studies report and discuss refactoring practice on real software projects.
-Unfortunately, such studies are often hindered by the difficulty of obtaining reliable information of refactoring activity from version histories.
-Although there are approaches capable of detecting refactorings automatically, they still suffer from precision and recall problems.
-In this thesis proposal, we first report a large scale study of refactoring practice, focusing on the motivations behind refactorings.
-Then, we propose a new approach to detect refactoring in version histories, which has better precision and recall than existing solutions.
-As a future work, we plan to extend its evaluation with a new study to assess its precision in real scenarios. 
-Besides, we plan to employ our approach to build tools to aid the analysis of code changes of software components that went through refactoring.
+As such, researchers often report and discuss refactoring practice on real software projects.
+Unfortunately, empirical studies on refactoring are often hindered by the difficulty of obtaining reliable information of refactoring activity, and many questions remain open.
+In this thesis, we first investigate an overarching question: \emph{why do developers refactor?}
+To this end, we developed two large-scale empirical studies that rely on mining refactorings from version histories. 
+Initially, we investigated the relationship between Extract Method refactoring and code reuse. After analyzing over 10,000 revisions of 10 open source systems, we found evidence that, in 56.9\% of the cases, Extract Method is motivated by code reuse.
+Next, we investigated the motivations for refactorings applied to open source systems based on feedback from the developers who performed the refactorings. 
+By applying thematic analysis on the collected responses, we compiled a catalogue of 44 distinct motivations for 12 well-known refactoring types.
+We found that refactoring activity is mainly driven by changes in the requirements and much less by code smells. Notably, Extract Method is the most versatile refactoring operation, serving 11 different purposes.
+Additionally, we found evidence that the IDE used by the developers affects the adoption of automated refactoring tools.
+As a second line of research, we propose RefDiff, a novel approach to mine refactorings from version histories that supports multiple programming languages and offers high precision and recall.
+Our tool leverages existing techniques and introduces a novel refactoring detection algorithm that relies on the Code Structure Tree (CST)---a simple yet powerful representation of the source code that abstracts away the specificities of particular programming languages---and on a code similarity metric based on TF-IDF technique.
+Despite its language-agnostic design, our evaluation shows that RefDiff's precision (96\%) and recall (80\%) are on par with state-of-the-art refactoring detection approaches specialized in the Java language.
 
-
-% Short abstract
-%Refactoring is an important aspect of software development and a key factor to understand software evolution. Unfortunately, empirical studies on refactoring are often hindered by the difficulty of obtaining reliable information of refactoring activity, and many questions remain open. In this thesis, we first report two large-scale empirical studies that rely on mining refactorings from version histories. Initially, we investigated the relationship between Extract Method refactoring and code reuse. Later, we investigated the motivations for refactorings applied to open source systems based on feedback from the developers who performed the refactorings. As result, we compiled a catalogue of 44 distinct motivations for 12 well-known refactoring types. Additionally, we propose and evaluate a novel approach to detect refactorings from version histories that supports multiple programming languages and offers high precision and recall.
+\keywords{Refactoring, Software Evolution, Mining Software Repositories}

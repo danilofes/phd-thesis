@@ -9,12 +9,13 @@ This chapter concludes the thesis by listing the main contributions of this work
 \section{Contributions}
 \label{SecContributions}
 
+We summarize our main contributions as follows:
 \begin{enumerate}
 
 \item In Study~1, we found that code reuse is one of the main motivations for applying Extract Method refactoring (56.9\% of the cases).
 This was an important finding for two main reasons.
 First, the relationship between Extract Method and code reuse, using actual refactorings mined from code repositories, had not been studied before.
-Second, although refactoring literature emphasizes code smells as motivations for refactorings, such finding reveals that it is incorrect to assume that they are the sole reason to refactor source code.
+Second, although refactoring literature emphasizes the removal of code smells as motivations for refactorings, such finding reveals that it is incorrect to assume that this is the sole reason to refactor source code.
 
 \item In Study~2, we compiled a catalogue of 44 distinct motivations for 12 well-known refactoring types, based on the actual explanations of developers on specific refactorings they have recently applied.
 Some of the motivations we found are the resolution of well-known code smells, but many others are related to code evolution, facilitating the implementation of a feature or a bug fix.
@@ -24,12 +25,14 @@ The findings of this study increased our knowledge about refactoring practice an
 \item We proposed RefDiff, a novel refactoring detection approach suitable to mine refactoring in version histories in large scale with high precision and recall, with the advantage of supporting multiple programming languages.
 When initially proposed, our approach improved precision and recall over existing approaches.
 Later, we extended RefDiff introducing a language agnostic core algorithm and improved its precision to be on par with RMiner, the current state-of-the-art in Java refactoring detection.
-Taking advantage of RefDiff's extensible architecture, we implemented plugins for three programming languages (Java, JavaScript and C), and evaluated our approach in each of them.
-
+Taking advantage of RefDiff's extensible architecture, we implemented plugins for three programming languages (Java, JavaScript, and C), and evaluated our approach in each of them.
+Our tool is publicly available at GitHub (\url{https://github.com/aserg-ufmg/RefDiff}), along with usage instructions.
 
 \item We contributed to the creation of the largest refactoring dataset to date, which keeps record of 3,248 refactorings mined from 538 commits of 185 Java repositories.
 Such dataset initially contained the data we collected in Study~2, and was later extended by \cite{tsantalis2018rminer}, while evaluating RMiner. Finally, in our evaluation of RefDiff, we extended it once again with additional refactorings.
 This dataset serves as a reliable oracle that can be used to evaluate precision and recall of refactoring detection approaches, facilitating future research.
+The data is also publicly available at RefDiff's GitHub repository.
+
 
 \end{enumerate}
 
@@ -37,3 +40,21 @@ This dataset serves as a reliable oracle that can be used to evaluate precision 
 \section{Future Work}
 \label{SecFutureWork}
 
+The work developed throughout this thesis opens different research paths.
+First, there is still room for empirical studies on refactoring practice. 
+Given the availability of reliable refactoring mining techniques, larger scale studies can be conducted to confirm previous findings and to investigate other research questions.
+In particular, there is much to learn about refactoring in programming languages other than Java.
+For example, JavaScript is an interesting case study because of its distinct characteristics.
+We suspect that refactoring practice in a dynamically-typed, interpreted language, might differ significantly from compiled languages, because developers should carefully consider the risk of introducing defects.
+Without compile-time type checking, renaming a function that is used across several files is much more dangerous.
+Thus, developers may avoid broader refactorings in favor of more localized modifications.
+ 
+Besides empirical studies, there are potential practical problems worth exploring, such as the ones already discussed em Chapter~\ref{ChPracticalApplications}.
+In particular, refactoring-aware diff visualizations are little explored by the current literature.
+We believe that such kind of tool might increase developers' productivity, specially in the context of code reviewing.
+It is worth noting that the three problems discussed in Chapter~\ref{ChPracticalApplications}---\emph{Refactoring-aware diff}, \emph{Tracking changes of a code element}, and \emph{Resolving merge conflicts}---affect any programming language. Thus, the multi-language support provided by RefDiff is an important advantage for these applications.
+
+Last, refactoring detection approaches can be further improved.
+In particular, although RefDiff was thoroughly evaluated for Java, the JavaScript and C evaluation have a much smaller scale, due to the lack of refactoring oracles in these languages.
+Thus, a larger scale JavaScript and C evaluation could be conducted, which would also open margin for improvements in precision and recall. The evaluation data could also be used as a starting refactoring oracle for future competing tools.
+Additionally, RefDiff could be extended to support popular programming languages such as Python, C\#, and others.

@@ -887,7 +887,7 @@ Despite the aforementioned differences, we emphasize that RefDiff and RMiner hav
 \label{SecRefDiffExecTime}
 
 Besides comparing precision and recall, we also compared the execution time of both RefDiff and RMiner.
-For this purpose, we ran both tools using the same computer (an Intel Core i5-750 with 8GB of RAM) and measured the time spent in the analysis of each of the 538 commits from our oracle.
+For this purpose, we ran both tools using the same computer (an Intel Core i5-750 with 8GB of RAM and a 7200 RPM HDD) and measured the time spent in the analysis of each of the 538 commits from our oracle.
 Figure~\ref{FigVioplotExecTime} shows a violin plot of the execution time per commit for both tools, using a log-10 scale.
 We can note that the median is lower for RMiner (109 ms vs. 157 ms), but RefDiff has less variation in the execution times. For example, the maximum execution time for RMiner was 85s, at commit~ab98bca from  \textit{java-algorithms-implementation}, whilst RefDiff spent 10s at maximum, in commit~4baf0a4 from \textit{aws-sdk-java}.
 Nevertheless, both tools analyze the majority of the commits in less than one second and are viable for practical use.

@@ -1,1 +1,19 @@
-Refactoring
+
+Refatoração de código é uma prática importante no desenvolvimento de sistemas e um fator essencial para entender a evolução de um software.
+Sendo assim, pesquisadores frequentemente reportam e discutem a prática de refatoração em sistemas reais.
+Infelizmente, estudos empíricos sobre refatoração são frequentemente limitados pela dificuldade de se obter informações confiáveis sobre a atividade de refatoração e muitas questões permanecem em aberto.
+Nesta tese, primeiro investigamos uma importante questão: \emph{por que desenvolvedores refatoram?}
+Para esse fim, desenvolvemos dois estudos empíricos em larga escala, baseados na mineração de refatorações em históricos de versões.
+Inicialmente, investigamos a relação entre a refatoração Extrair Método e reúso de código.
+Após analizar mais de 10 mil revisões de 10 sistemas, encontramos evidências de que em 56,9\% dos casos tal refatoração é motivada pelo reúso de código.
+Em seguida, investigamos as motivações para refatorações encontradas em sistemas de código aberto com base em respostas dos próprios desenvolvedores que as aplicaram.
+Como resultado, compilamos um catálogo com 44 motivações distintas para 12 tipos de refatorações.
+Tal catálogo revela que o esforço de refatoração é mais direcionado pela necessidade de evolução do sistema do que pela resolução de problemas de projeto conhecidos como \emph{code smells}.
+Notadamente, Extrair Método é a refatoração mais versátil, servindo a 11 propósitos diferentes.
+%Additionally, we found evidence that the IDE used by the developers affects the adoption of automated refactoring tools.
+Em uma segunda linha de pesquisa, nós propomos RefDiff, uma nova ferramenta para mineração de refatorações em histórico de versões, com suporte a múltiplas linguagens de programação e alta precisão.
+%As a second line of research, we propose RefDiff, a novel approach to mine refactorings from version histories that supports multiple programming languages and offers high precision and recall.
+Nossa ferramenta introduz um algoritmo de detecção de refatorações baseado na \emph{Code Structure Tree} (CST)---uma representação do código fonte que abstrai as particularidades das linguagens de programação---e em uma métrica de similaridade de código baseada na técnica \emph{TF-IDF}.
+Apesar do seu projeto multilinguagem, nossa avaliação revelou que nossa ferramenta tem precisão (96\%) e revocação (80\%) equivalentes ao estado da arte em ferramentas especializadas na linguagem Java.
+
+\keywords{Refatoração, Evolução de Software, Mineração de Repositórios}
