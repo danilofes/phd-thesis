@@ -22,13 +22,13 @@ With these results, we envision RefDiff as a viable alternative for breaking the
 
 
 Knowing about the refactoring activity in software projects is a valuable information to help researchers understand software evolution.
-For example, past studies have used such information to shed light on important aspects of refactoring practice, such as: how developers refactor~\citep{MurphyHill2012}, the usage of refactoring tools~\citep{negara2013, MurphyHill2012}, the motivations driving refactoring~\cite{Kim:2012:FSE, kim-tse-2014, fse2016-why-we-refactor}, the risks of refactoring~\citep{Kim:2012:FSE, kim-tse-2014, Kim:2011, weissgerber2006refactorings, bavota2012does}, and the impact of refactoring on code quality metrics~\citep{Kim:2012:FSE, kim-tse-2014}.
-Moreover, it is often important to keep track of refactorings when performing source code evolution analysis because files, classes, or functions may have their histories split by the refactorings such as \emph{Move} or \emph{Rename}~\cite{icse2018}.
+For example, past studies have used such information to shed light on important aspects of refactoring practice, such as: how developers refactor~\citep{MurphyHill2012}, the usage of refactoring tools~\citep{negara2013, MurphyHill2012}, the motivations driving refactoring~\citep{Kim:2012:FSE, kim-tse-2014, fse2016-why-we-refactor}, the risks of refactoring~\citep{Kim:2012:FSE, kim-tse-2014, Kim:2011, Weissgerber:2006, bavota2012does}, and the impact of refactoring on code quality metrics~\citep{Kim:2012:FSE, kim-tse-2014}.
+Moreover, it is often important to keep track of refactorings when performing source code evolution analysis because files, classes, or functions may have their histories split by the refactorings such as \emph{Move} or \emph{Rename}~\citep{icse2018}.
 
 Additionally, knowing which refactoring operations were applied in the version history of a system may help in several practical tasks.
 For example, in a study by \cite{Kim:2012:FSE}, many developers mentioned the difficulties they face when reviewing or integrating code changes after large refactoring operations, which moves or renames several code elements. Thus, developers feel discouraged to refactor their code. If a tool is able to identify such refactoring operations, it can possibly resolve merge conflicts automatically. 
 Moreover, diff visualization tools can also benefit from such information, presenting refactored code elements side-by-side with their corresponding version before the change.
-Another application for such information is adapting client code to a refactored version of an API it uses~\citep{henkel2005catchup, Xing:2008:JDevAn}. If we are able to detect the refactorings that were applied to an API, we can replay them on the client code automatically.
+Another application for such information is adapting client code to a refactored version of an API it uses~\citep{henkel2005catchup, Xing:2008:JDevAn}. If we are able to detect the refactorings that were applied to an API, we might replay them on the client code automatically.
 
 %Although there are approaches capable of detecting refactorings automatically, there are still some issues that hinder their application. Specifically, the precision and recall of such approaches still need improvements.
 %In this paper, we try to fill this gap by proposing RefDiff, an automated approach that identifies refactorings performed in the version history of a system.
@@ -45,7 +45,7 @@ Thus, we are still not able to mine refactoring activity in a vast amount of sof
 By restricting refactoring research to a single programming language, we may get a biased understanding of the reality.
 Moreover, the practical applications of such tools are hindered by the lack of support of other popular programming languages.
 
-For all these reasons, in this paper we propose a multi-language refactoring detection approach, named as RefDiff~2.0, which is a complete redesign of its first version that introduces an extensible architecture.
+For all these reasons, in this chapter we propose a multi-language refactoring detection approach, named as RefDiff~2.0, which is a complete redesign of its first version that introduces an extensible architecture.
 In RefDiff~2.0, the refactoring detection heuristics are fully implemented in a common core, and support for programming languages is provided by plug-in modules.
 %that works with a language-independent model that abstracts abstracting away the 
 As a way to validate this architecture, we implemented and evaluated extension modules for three mainstream programming languages with distinct characteristics: Java, JavaScript (a widely popular dynamic programming language, used mostly to build web applications) and C (a procedural programming language, used mostly to implement system software).
@@ -60,18 +60,19 @@ In summary, we deliver the following contributions in this work:
 \item A major extension of our refactoring detection approach proposed in previous work~\citep{msr2017}, which includes a redesign of its core to work with a language-independent model and improved detection heuristics.
 \item A publicly available implementation\footnote{RefDiff and all evaluation data are public available in GitHub:\\
 \url{https://github.com/aserg-ufmg/RefDiff}}
-of our approach, with out-of-the-box support for Java, C, and Javascript.
+of our approach, with out-of-the-box support for Java, C, and JavaScript.
 \item An evaluation of the precision and recall of RefDiff using a large scale dataset of refactorings performed in real-world Java open source projects, comparing it with RMiner, a state-of-the-art tool for detecting refactorings in Java. As a byproduct of this evaluation, we also extend the dataset with new refactoring instances discovered by our tool.
-\item An evaluation of the precision and recall of RefDiff in real-world C and Javascript open source projects.
+\item An evaluation of the precision and recall of RefDiff in real-world C and JavaScript open source projects.
 \end{itemize}
 
-The remainder of this paper is structured as follows.
+The remainder of this chapter is structured as follows.
 Section~\ref{SecBackground} describes related work, discussing existing refactoring detection approaches.
 %with a special focus on RMiner, which is the one we compare with RefDiff.
 Section~\ref{SecApproach} presents the proposed approach in details.
 Section~\ref{sec:eval:java} describes the design and results of a large scale evaluation of RefDiff in Java projects.
 Section~\ref{sec:eval:js:c} describes the design and results of an evaluation of RefDiff in C and JavaScript projects.
-Last, Section~\ref{SecConclusion} presents final remarks and concludes the paper.
+Section~\ref{sec:challenges} discusses challenges and limitations.
+Last, Section~\ref{SecConclusion} presents final remarks and concludes the chapter.
 
 
 
@@ -104,19 +105,19 @@ One of its distinguishing characteristic is the use of the classical TF-IDF simi
 In our previous work, we evaluated RefDiff~1.0 using an oracle of 448 refactoring operations, distributed across seven Java projects.
 We built this oracle by deliberately applying refactorings in software repositories in a controlled manner.
 Although this strategy poses the risk of creating an artificial dataset, this way we assured this oracle was complete and could be used to compute both precision and recall.
-We compared our tool with three existing approaches, namely Refactoring Miner~\citep{tsantalis_empiricalstudy}, Refactoring Crawler~\citep{dig2006automated}, and Ref-Finder~\citep{Kim:2010:RefFinder}.
+We compared our tool with three existing approaches, namely Refactoring Miner~0.1~\citep{tsantalis_empiricalstudy}, Refactoring Crawler~\citep{dig2006automated}, and Ref-Finder~\citep{Kim:2010:RefFinder}.
 Our approach achieved precision of 100\% and recall of 88\%, surpassing the three tools subjected to the comparison.
 
 
 \subsection{Refactoring Miner/RMiner}
 
-Refactoring Miner is an approach originally introduced by \cite{tsantalis_empiricalstudy}, capable of identifying 14 high-level refactoring types: \emph{Rename Package/Class/Method}, \emph{Move Class/Method/Field}, \emph{Pull Up Method/Field}, \emph{Push Down Method/Field}, \emph{Extract Method}, \emph{Inline Method}, and \emph{Extract Superclass/Interface}.
+Refactoring Miner~0.1 is an approach originally introduced by \cite{tsantalis_empiricalstudy}, capable of identifying 14 high-level refactoring types: \emph{Rename Package/Class/Method}, \emph{Move Class/Method/Field}, \emph{Pull Up Method/Field}, \emph{Push Down Method/Field}, \emph{Extract Method}, \emph{Inline Method}, and \emph{Extract Superclass/Interface}.
 In its original version, Refactoring Miner employs a lightweight algorithm, similar to the UMLDiff proposed by \cite{Xing:2005}, for differencing object-oriented models, inferring the set of classes, methods, and fields added, deleted or moved between two code revisions. 
 Refactoring Miner was employed and evaluated in empirical studies on refactoring along its evolution.
 In the first study, using the version histories of JUnit, HTTPCore, and HTTPClient, \cite{tsantalis_empiricalstudy} reported 8 false positives for the \emph{Extract Method} refactoring (96.4\% precision) and 4 false positives for the \emph{Rename Class} refactoring (97.6\% precision). No false positives were reported for the remaining refactorings.
 In a second study that mined refactorings in 285 GitHub hosted Java repositories~\citep{fse2016-why-we-refactor}, we found found 1,030 false positives out of 2,441 refactorings (63\% precision). However, we also evaluated Refactoring Miner using as a benchmark the dataset reported by \cite{Chaparro:2014}, in which it achieved 93\% precision and 98\% recall.
 
-In a recent study, \cite{tsantalis2018rminer} proposed a major evolution of its tool, now named as RMiner.
+In a recent study, \cite{tsantalis2018rminer} proposed a major evolution of its tool, now named as RMiner~1.0.
 In its current version, RMiner relies on an AST-based statement matching algorithm and a set of detection rules that cover 15 representative refactoring types. 
 Its statement matching algorithm employes two techniques to be resilient to code restructuring during refactoring: abstraction, which deals with changes in statements' AST type due to refactorings, and argumentization, which deals with changes in sub-expressions within statements due to parameterization.
 To evaluate RMiner, the authors created a dataset with 3,188 real refactorings instances from 185 open-source projects. Using this oracle, the authors found that RMiner has a precision of 98\% and recall of 87\%, which was the best result so far, surpassing RefDiff 1.0, the previous state-of-the-art, which achieved precision of 75.7\% and recall of 85.8\% in this dataset.
@@ -144,7 +145,7 @@ Shingles are representations for strings with the following property: if a strin
 In a second phase, Refactoring Crawler applies specific strategies for detecting each refactoring type, and computes a more costly metric that determines the similarity of references between code entities in two versions of the system. For example, two methods are similar if the sets of methods that call them are similar, and the sets of methods they call are also similar.
 The strategies to detect refactorings are repeated in a loop until no new refactorings are found. Therefore, the detection of a refactoring, such as a rename, may change the reference graph and enable the detection of new refactorings.
 
-The authors evaluated Refactoring Crawler comparing pairs of releases of three open-source software components: Eclipse UI, Struts, and JHotDraw. Such components were chosen because they provided detailed release notes describing API changes. The authors relied on such information and on manual inspection to build an oracle
+\cite{dig2006automated} evaluated Refactoring Crawler comparing pairs of releases of three open-source software components: Eclipse UI, Struts, and JHotDraw. Such components were chosen because they provided detailed release notes describing API changes. The authors relied on such information and on manual inspection to build an oracle
 %of known refactorings in those releases
 containing 131 refactorings.
 The reported results are: Eclipse UI (90\% precision and 86\% recall), Struts (100\% precision and 86\% recall), and JHotDraw (100\% precision and 100\% recall).
@@ -213,7 +214,7 @@ Table~\ref{TabCstNodes} lists the types of AST nodes that are represented in the
 \toprule
 Language & Node types \\
 \midrule
-Java & class, enum, interface, and method \\
+Java & class, enum, interface, method, and constructor \\
 C & file and function \\
 JavaScript & file, class, and function \\
 \bottomrule
@@ -279,7 +280,7 @@ This phase takes as input the CST's of revisions $v_1$ and $v_2$ and outputs the
 \begin{itemize}
 \item \textbf{Matching relationships}, which indicate that the node $n_1$ corresponds to $n_2$ in the subsequent revision.
 The possible matching relationships are \textit{Same}, \textit{Convert Type}, \textit{Pull Up}, \textit{Push Down}, \textit{Change Signature}, \textit{Move}, \textit{Rename}, and \textit{Move and Rename}.
-We say that a node $n_1$ matches with $n_2$ if exists a relationship $(n_1, n_2, t) \in R$ such that $t$ is a matching relationship.
+We say that a node $n_1$ matches with $n_2$ if there exists a relationship $(n_1, n_2, t) \in R$ such that $t$ is a matching relationship.
 
 \item \textbf{Non-matching relationships}, which indicate that either node $n_1$ is decomposed to create $n_2$, or node $n_1$ is incorporated into $n_2$.
 There are four non-matching relationships: \textit{Extract Supertype}, \textit{Extract}, \textit{Extract and Move}, and \textit{Inline}.
@@ -611,7 +612,7 @@ The rationale behind this formula is that the similarity is at maximum (1.0) whe
 
 Besides relying on the code similarity, our algorithm also depends on the function $\rdnsim(n_1, n_2)$ in Step~3.
 This function denotes the similarity between the names of the code elements $n_1$ and $n_2$.
-For computing $\rdnsim$, we first decompose the identifiers of $n_1$ and $n_2$ into their composing words. Specifically, we split camel case (e.g., \codeinl{myIdentifier}) or snake case patterns (e.g., \codeinl{my\_identifier}) . For example, \codeinl{SomeLong\_Name} yields three terms: \codeinl{Some}, \codeinl{Long}, and \codeinl{Name}.
+For computing $\rdnsim$, we first decompose the identifiers of $n_1$ and $n_2$ into their composing words. Specifically, we split camel case (e.g., \codeinl{myIdentifier}) or snake case patterns (e.g., \codeinl{my\_identifier}). For example, \codeinl{SomeLong\_Name} yields three terms: \codeinl{Some}, \codeinl{Long}, and \codeinl{Name}.
 Then, we compute $\rdnsim$ using the same formula from $\rdsim$ (see Equation~\ref{WJaccard}), but in this case, each multiset of tokens contains the terms composing the identifiers of $n_1$ and $n_2$.
 
 
@@ -735,7 +736,7 @@ First, we present our evaluation design (Section~\ref{sec:eval:java:design}) and
 To evaluate the precision and recall of RefDiff in Java we initially use an oracle proposed by \cite{tsantalis2018rminer}.
 This oracle includes 3,188 manually-validated refactoring instances, detected in 538 commits from 185 open-source projects, and covering 15 refactoring types.
 It is important to emphasize that most commits contain non-refactoring changes interleaved with refactorings, which is the most challenging scenario for refactoring detection tools.
-In our evaluation, we also compare RefDiff's precision and recall against RMiner.
+In our evaluation, we also compare RefDiff's precision and recall against RMiner~1.0.
 For the purpose of the comparison, we restricted the oracle to 11 refactoring types supported by both tools.
 Specifically, we excluded \emph{Change Package}, \emph{Move Field}, \emph{Push Down Field} and \emph{Pull Up Field} from the analysis as they are not supported by RefDiff.
 Moreover, \emph{Convert Type} and \emph{Change Signature}, although supported by RefDiff, are not evaluated because they are not covered by the oracle.
@@ -744,7 +745,7 @@ Additionally, it also contains 704 refactoring instances classified as false pos
 These instances are used to detect false positives reported by RefDiff, as described in the next paragraph.
 %Last, it is worth noting that the \emph{Rename Class} category also includes instances of \emph{Move and Rename Class}. Similarly, the \emph{Extract Method} category also includes instances of \emph{Extract and Move Method}. This measure was necessary because the oracle did not distinguish between those refactorings reliably.
 
-First, we run RefDiff on each commit of the oracle. For each detected refactoring $r$ we checked whether $r$ is in the oracle, which may yield three outcomes: (i) if $r$ is a confirmed refactoring from the oracle, then it is a true positive; (ii) if $r$ is a false refactoring from the oracle, then it is a false positive; (iii) otherwise, $r$ was inspected by two authors of this paper to assess whether it is a false positive or a true positive not covered by the oracle.
+First, we run RefDiff on each commit of the oracle. For each detected refactoring $r$ we checked whether $r$ is in the oracle, which may yield three outcomes: (i) if $r$ is a confirmed refactoring from the oracle, then it is a true positive; (ii) if $r$ is a false refactoring from the oracle, then it is a false positive; (iii) otherwise, $r$ was inspected by two researchers to assess whether it is a false positive or a true positive not covered by the oracle.
 This extra manual validation is needed because the initial oracle must not be granted as complete, i.e., including all refactorings performed in the set of analysed commits.
 Specifically, it was constructed using a triangulation approach, based on an initial list of refactorings produced by RMiner and RefDiff~1.0. For this reason, it might miss true refactorings only detected by RefDiff~2.0. %the improved implementation of RefDiff, described in this paper.
 
@@ -759,7 +760,7 @@ Specifically, it was constructed using a triangulation approach, based on an ini
 
 
 
-After following this procedure, RefDiff 2.0 detected 263 new refactoring instances (i.e., not listed in the initial oracle), which were validated by two paper's authors, called here validators. In the case of 175 refactorings (66\%), the validators agreed on their classification, including 138 refactorings labelled as true positives by both validators and 37 labelled as false positives. After this initial and independent validation, the validators discussed together the remaining 88 cases (34\%), to reach an agreement. As a result, 79 refactorings were considered true positives and 9 refactorings were classified as false positives.
+After following this procedure, RefDiff 2.0 detected 263 new refactoring instances (i.e., not listed in the initial oracle), which were validated by two researchers, called here validators. In the case of 175 refactorings (66\%), the validators agreed on their classification, including 138 refactorings labelled as true positives by both validators and 37 labelled as false positives. After this initial and independent validation, the validators discussed together the remaining 88 cases (34\%), to reach an agreement. As a result, 79 refactorings were considered true positives and 9 refactorings were classified as false positives.
 %Figure~\ref{FigDiff2} shows a first example of true positive. RefDiff identified an \emph{Inline Method} refactoring, consisting on the substitution of the method named \codeinl{acquireNodeRelationshipCursor}, which was removed in the same commit, by invocations to methods \codeinl{get()} and \codeinl{init()}. We emphasize in this figure the changes that correspond to this refactoring. This indication of refactoring was not listed in the oracle. The validators individually analyzed this commit and both agreed that an \emph{Inline Method} was applied in this commit.
 Figure~\ref{FigDiff3} shows an example of a refactoring identified by RefDiff that both validators classified as true positive.
 In this case, a developer extracted method \codeinl{createPrepareRpcOptions} from method \codeinl{prepareOnAffectedNodes}.
@@ -797,11 +798,11 @@ The expanded oracle includes 3,248 refactoring instances (7.19\% more than the i
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lrr@{}ll@{}p{0.5cm}@{}ll@{}p{0.5cm}@{}ll@{}}
 \toprule
- & & & \multicolumn{2}{c}{RefDiff 1.0} & & \multicolumn{2}{c}{RefDiff 2.0} & & \multicolumn{2}{c}{RMiner}\\
+ & & & \multicolumn{2}{c}{RefDiff 1.0} & & \multicolumn{2}{c}{RefDiff 2.0} & & \multicolumn{2}{c}{RMiner 1.0}\\
 \cmidrule{4-5} \cmidrule{7-8} \cmidrule{10-11}
 Refactoring Type & \# & & Precision & Recall & & Precision & Recall & & Precision & Recall \\
 \midrule
-Move Class & 1100 & & \xbar{0.999} & \xbar{0.881} & & \xbar{0.999} & \xbar{0.970} & & \xbar{1.000} & \xbar{0.925} \\
+Move Class & 1,100 & & \xbar{0.999} & \xbar{0.881} & & \xbar{0.999} & \xbar{0.970} & & \xbar{1.000} & \xbar{0.925} \\
 Move Method & 319 & & \xbar{0.322} & \xbar{0.746} & & \xbar{0.871} & \xbar{0.803} & & \xbar{0.955} & \xbar{0.658} \\
 Move and Rename/Rename Class & 95 & & \xbar{0.897} & \xbar{0.642} & & \xbar{0.922} & \xbar{0.874} & & \xbar{0.983} & \xbar{0.621} \\
 Rename Method & 350 & & \xbar{0.855} & \xbar{0.811} & & \xbar{0.946} & \xbar{0.694} & & \xbar{0.978} & \xbar{0.771} \\
@@ -809,10 +810,10 @@ Extract Interface & 24 & & \xbar{0.769} & \xbar{0.417} & & \xbar{0.875} & \xbar{
 Extract Superclass & 70 & & \xbar{1.000} & \xbar{0.157} & & \xbar{1.000} & \xbar{0.743} & & \xbar{0.958} & \xbar{0.971} \\
 Pull Up Method & 91 & & \xbar{0.806} & \xbar{0.593} & & \xbar{0.974} & \xbar{0.824} & & \xbar{1.000} & \xbar{0.791} \\
 Push Down Method & 40 & & \xbar{0.950} & \xbar{0.475} & & \xbar{0.950} & \xbar{0.950} & & \xbar{1.000} & \xbar{0.825} \\
-Extract/Extract and Move Method & 1037 & & \xbar{0.904} & \xbar{0.833} & & \xbar{0.962} & \xbar{0.663} & & \xbar{0.985} & \xbar{0.768} \\
+Extract/Extract and Move Method & 1,037 & & \xbar{0.904} & \xbar{0.833} & & \xbar{0.962} & \xbar{0.663} & & \xbar{0.985} & \xbar{0.768} \\
 Inline Method & 122 & & \xbar{0.842} & \xbar{0.787} & & \xbar{0.957} & \xbar{0.721} & & \xbar{0.990} & \xbar{0.795} \\
 \addlinespace
-Total & 3248 & & \xbar{0.792} & \xbar{0.802} & & \xbar{0.964} & \xbar{0.804} & & \xbar{0.988} & \xbar{0.813} \\
+Total & 3,248 & & \xbar{0.792} & \xbar{0.802} & & \xbar{0.964} & \xbar{0.804} & & \xbar{0.988} & \xbar{0.813} \\
 \bottomrule
 \end{tabular}
 }
@@ -887,7 +888,7 @@ Despite the aforementioned differences, we emphasize that RefDiff and RMiner hav
 \label{SecRefDiffExecTime}
 
 Besides comparing precision and recall, we also compared the execution time of both RefDiff and RMiner.
-For this purpose, we ran both tools using the same computer (an Intel Core i5-750 with 8GB of RAM and a 7200 RPM HDD) and measured the time spent in the analysis of each of the 538 commits from our oracle.
+For this purpose, we ran both tools using the same computer (an Intel Core i5-750 with 8GB of RAM and a 7200 RPM HDD) and measured the time spent in the analysis of each of the 538 commits from our oracle.\footnote{We repeated the experiment three times and discarded the times collected in the first run, which was considered as a warm up.}
 Figure~\ref{FigVioplotExecTime} shows a violin plot of the execution time per commit for both tools, using a log-10 scale.
 We can note that the median is lower for RMiner (109 ms vs. 157 ms), but RefDiff has less variation in the execution times. For example, the maximum execution time for RMiner was 85s, at commit~ab98bca from  \textit{java-algorithms-implementation}, whilst RefDiff spent 10s at maximum, in commit~4baf0a4 from \textit{aws-sdk-java}.
 Nevertheless, both tools analyze the majority of the commits in less than one second and are viable for practical use.
@@ -909,11 +910,12 @@ There are at least two threats to the validity of the evaluation with Java proje
 The first one is the subjectivity inherent to the manual classification of the reported refactorings as true/false positives, which directly impact the computed precision.
 Different validators may have a different interpretation of the code change under analysis, which is demonstrated by the fact that in 34\% of the cases the validators initially disagreed.
 We mitigated this threat by having each refactoring assessed by two validators independently.
-Second, as discussed in Section~\ref{sec:eval:java:design}, our oracle can not be granted as complete, i.e., there might exist refactorings in the analyzed revisions that are not detected by neither RMiner nor RefDiff.
+Moreover, there are not precise and consensual definitions of the mechanics of each refactoring type. In fact, \cite{oliveira2019revisiting} shows that developers and IDE refactoring tools use different mechanics for most refactoring types.
+Second, as discussed in Section~\ref{sec:eval:java:design}, our oracle can not be granted as complete, i.e., there might exist refactorings in the analyzed revisions that are not detected by any of the tools.
 Thus, the actual recall might be lower than the computed recall.
 Unfortunately, it is not feasible to assure the completeness of an oracle at this scale with manual inspection.
 A single commit usually contains hundreds of changed lines of code, making such task extremely time consuming and error prone.
-Nevertheless, the computed recall serves the purpose of comparison between tools, and it should also be a fair approximation of actual recall, as our oracle is based on refactorings found by three tools: RMiner, RefDiff~1.0, and RefDiff~2.0.
+Nevertheless, the computed recall serves the purpose of comparison between tools, and it should also be a fair approximation of actual recall, as our oracle is based on refactorings found by three tools: RMiner~1.0, RefDiff~1.0, and RefDiff~2.0.
 
 %We cannot claim that the precision and recall of our approach would be the same for different projects, with distinct characteristics, and with actual refactorings applied by developers. However, such setup was necessary to compute recall, as discussed in Section~\ref{SecOracleConstruction}. Besides, the results we achieved in the calibration process (precision of 85.7\% and recall of 94.1\%), in which we used actual commits from relevant Java repositories, suggest that RefDiff's precision and recall are acceptable in real scenarios. Nevertheless, we plan to extend this study by assessing the precision of RefDiff in a large corpus of commits from open-source repositories.
 %Neverthless, our evaluation includes relevant Java systems of different domains, with up to 374,000 lines of code.
@@ -1012,7 +1014,7 @@ The resulting list of repositories was manually inspected to discard the ones th
 \item Given the list of refactorings detected by RefDiff, we randomly selected 10 instances of each refactoring type to manually assess whether they correspond to actual refactorings (true positives), or incorrect reports (false positives).
 When applying the random selection, we enforced the constraint that we should not select two refactoring instances performed in the same commit.
 In this way, we avoid selecting similar refactorings which were performed in batch, e.g., multiple classes or functions moved together.
-To confirm each refactoring operation, one of the authors manually inspected the diff of the code changes in the corresponding commit.
+To confirm each refactoring operation, we manually inspected the diff of the code changes in the corresponding commit.
 \end{enumerate}
 
 After following the three steps, we compute precision as $P = \mathit{TP} / (\mathit{TP} + \mathit{FP})$, where $\mathit{TP}$ is the number of true positives and $\mathit{FP}$ is the number of false positives.
@@ -1028,16 +1030,16 @@ To compute RefDiff's recall when detecting refactorings in JavaScript and C, we 
 \begin{enumerate}  
 \item We used GitHub API to find refactorings documented in commits from the repositories selected for evaluating precision (Section~\ref{sec:eval:js:c:precision}). Such queries consist in searching for keywords denoting a particular type of refactoring in the commit message, as described in Table~\ref{TabSearchQueries}. For example, when looking for \emph{Rename Function} refactoring instances, we built a query that looks for commits which contain the keywords \textit{rename} and \textit{function} in their messages, among other combinations.
 
-\item Given the list of results of a query, one of the authors manually inspected each item to assess whether it really contains a refactoring. He started by analyzing the commit message. 
+\item Given the list of results of a query, we manually inspected each item to assess whether it really contains a refactoring. We started by analyzing the commit message. 
 In many cases, the keywords are found in the text, but they are not referring to a refactoring operation.
 For example, one of the messages was: \textit{``The routeToRegExp() function, introduced by 840b5f0, could not extract path params if the path contained question mark or hash.''}
 This message contains the keywords \textit{extract} and \textit{function}, but clearly does not describe an \emph{Extract Function} refactoring.
-In these situations, he discarded the commit with no further analysis.
-When the commit message described a refactoring, he checked the code diff to confirm it.
+In these situations, we discarded the commit with no further analysis.
+When the commit message described a refactoring, we checked the code diff to confirm it.
 Each confirmed refactoring was recorded in a normalized textual format compatible with the output of RefDiff.
 Inspecting the code diff is also necessary to locate the code elements involved in the operation.
 For example, the message \textit{``Extract commit phase passes into separate functions''} documents a \emph{Extract Function} refactoring, but does not specify the name of the extracted functions.
-He repeated this procedure until he found 10 instances of each refactoring type or when there were no more results to inspect. We found less than 10 instances when looking for \emph{Move and Rename File}, \emph{Move and Rename Function}, and \emph{Inline Function} for JavaScript. Additionally, although modern JavaScript contains classes, we did not find documented refactorings instances of \emph{Move and/or Rename Class}.
+We repeated this procedure until he found 10 instances of each refactoring type or when there were no more results to inspect. We found less than 10 instances when looking for \emph{Move and Rename File}, \emph{Move and Rename Function}, and \emph{Inline Function} for JavaScript. Additionally, although modern JavaScript contains classes, we did not find documented refactorings instances of \emph{Move and/or Rename Class}.
 
 
 
@@ -1268,6 +1270,7 @@ Last, we should also note that, similarly to the evaluation with Java projects, 
 
 
 \section{Challenges and limitations}
+\label{sec:challenges}
 
 %In order to support multiple languages, RefDiff distinguish itself from other approaches in at least two main aspects.
 %First, our algorithm relies on the CST and on a set of generalized heuristics to abstract away particularities of programming languages.
@@ -1300,8 +1303,9 @@ In summary, although generating precise call graphs is non trivial for untyped l
 
 \noindent\textbf{JavaScript class syntax:} Our JavaScript implementation only considers classes defined with the new ES6 syntax, i.e., classes emulated by  functions definitions and prototype-based inheritance are just treated like regular functions when generating the CST.
 
-\noindent\textbf{Field-related refactorings:} The current implementation of RefDiff 2.0 does not detect \emph{Move/Pull Up/Push Down Field}, since they are less popular operations~\citep{fse2016-why-we-refactor}. However, there is no fundamental issue that prevents supporting these refactorings in the future, as long as we extend the CST to include field information.
-%We plan to add support for more refactoring types in future work.
+\noindent\textbf{Field-related refactorings:} As our refactoring detection algorithm is centered around code similarity and fields do not have a body, we did not implement the detection of \emph{Move/Pull Up/Push Down Field} in RefDiff 2.0.
+Unrestricted detection of \emph{Move Field} based solely on fields' types and names is prone to find many false positives.
+However, we plan to add support for field-related refactorings in future work by using stricter detection rules, similarly to RMiner (e.g., requiring a dependency between their source/destination classes).
 
 
 
@@ -1323,7 +1327,7 @@ Although we were not able to surpass RMiner's precision of 98.8\%, we argue that
 In one hand, specialized tools can use more advanced techniques to improve refactoring detection.
 %For example, RMiner relies on a statement matching algorithm and applies syntax-aware replacement of AST nodes to make it more resilient to code changes overlapped with refactorings.
 On the other hand, the higher the coupling with the syntax of a particular language, the harder it becomes to port the approach to other programming languages.
-Last, our evaluation in JavasScript and C also showed promising results. RefDiff's precision and recall are respectively 91\% and 88\% for JavaScript, and 88\% and 91\% for C.
+Last, our evaluation in JavaScript and C also showed promising results. RefDiff's precision and recall are respectively 91\% and 88\% for JavaScript, and 88\% and 91\% for C.
 These results show the viability our approach for languages other than Java.
 Thus, we claim that RefDiff~2.0 can pave the way for important advances in refactoring studies in JavaScript, C, and other languages in the future.
 Moreover, it can be employed in practical tasks, such as improving diff visualization, automatically documenting refactorings in commits, keeping track of the history of refactored code elements, and others.

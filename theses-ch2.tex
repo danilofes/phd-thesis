@@ -90,12 +90,12 @@ yuicompressor & A JavaScript compressor \\
 \label{ch5:tsystems}
 \end{table}
 
-From the set of 100 repositories, we selected a sample of 10 systems to perform this study due to limitations imposed by the long time required to perform the analysis on the complete data. Table~\ref{ch5:tsystems} lists the selected repositories and a brief description of each. Note that there are well-known projects among them, such as the JUnit testing framework and the Clojure programming language.
+From the set of 100 repositories, we selected a random sample of 10 systems to perform this study due to limitations imposed by the long time required to perform the analysis on the complete data. Table~\ref{ch5:tsystems} lists the selected repositories and a brief description of each. Note that there are well-known projects among them, such as the JUnit testing framework and the Clojure programming language.
 
 \subsection{Detecting refactorings}
 \label{srefactoringdetection}
 
-In this step, we analyzed each commit from the selected repositories to find instances of Extract Method refactoring. For this task, we used an automated approach to find refactorings proposed by \cite{tsantalis_empiricalstudy}. Such approach compares the source code before and after a code change and employs a combination of heuristics designed to identify eleven types of refactoring.
+In this step, we analyzed each commit from the selected repositories to find instances of Extract Method refactoring. For this task, we used an automated approach to find refactorings proposed by \cite{tsantalis_empiricalstudy}, which we will denote as RefactoringMiner~0.1. Such approach compares the source code before and after a code change and employs a combination of heuristics designed to identify eleven types of refactoring.
 In this study, our interest lies in Extract Method refactoring, whose detection heuristics are described below.
 
 Let $M^+$ be the set of methods that were added between two consecutive revisions $v$ and $v'$. Additionally, let $M^=$ be the set of methods that exist both in $v$ and $v'$ (they were neither added or deleted between revisions).
@@ -160,7 +160,7 @@ It is important to note that the number of methods analyzed is always greater th
 In the next sections we discuss each research question in detail, taking into consideration the set of 649 extracted methods.
 
 \subsection{RQ1: How often is Extract Method motivated by code reuse?}
-
+\label{study1:rq1}
 
 \begin{table}[b]\centering
 \renewcommand{\arraystretch}{1.3}
@@ -186,7 +186,7 @@ Total & 649 & 369 (56.9\%) & 51 (7.9\%) \\
 \end{table}
 
 
-To answer this first research question, we searched for the following scenario: in a single commit, a developer extracts a method and invokes it in two or more methods of the system. We assume that, in such cases, the developer extracted the method to reuse it.
+To answer this first research question, we searched for the following scenario: in a single commit, a developer extracts a method and invokes it two or more times in the system. We assume that, in such cases, the developer extracted the method to reuse it.
 The second column of Table~\ref{treuse} presents the number of extracted methods that are reused (i.e., two or more invocations).
 %In total 369 out of 649 methods fall in this scenario (56.9\%).
 When analyzing each repository individually, we note that the lowest percentage of reused methods is 41.1\%, for \textit{junit} repository, and the highest percentage is 68.6\%, for \textit{jsoup}. Moreover, for 7 out of 10 repositories, the percentage of reused methods is above 50\%.
@@ -196,7 +196,7 @@ Last, 369 out of 649 methods fall in this scenario~(56.9\%), which yields the fo
 \subsection{RQ2: How often is Extract Method motivated by removing duplicate code?}
 
 
-In this second research question, we investigate a more specific scenario: in a single commit, a developer extracts a method from two or more methods of the system. As a consequence, duplicate code in the original methods is removed and replaced by invocations of the extracted method.
+In this second research question, we investigate a more specific scenario: in a single commit, a developer extracts a method from two or more places of the system. As a consequence, duplicate code in the original methods is removed and replaced by invocations of the extracted method.
 The last column of Table~\ref{treuse} shows how often such scenario occurs in total and in each repository.
 We found at least one case of removal of duplicated code in each repository, except for the \textit{storm} project. The project with more occurrences is \textit{junit}, with 11 instances, which represents 10.3\% of all Extract Method instances. 
 It is worth noting that such duplicate code removal scenario is a specialization of the scenario studied in RQ1.
@@ -248,7 +248,7 @@ In the light of the results presented in previous sections, we propose three dis
 \item[Duplication:] In this scenario, a developer identifies duplicated code in two or more places in the system and applies Extract Method to fix the issue, replacing the duplicated code with a method invocation.
 Therefore, the refactoring is applied to fix the \emph{Duplicated Code} bad smell, which is a classical motivation for Extract Method, as documented in the refactoring literature~\citep{Fowler:1999}.
 Figure~\ref{iexdup} presents an example of this scenario in \textit{junit} project. A developer extracted the method \texttt{createLoader}, encapsulating a piece of duplicated code in methods \texttt{load} (lines~8--9) and \texttt{reload} (lines~12--13).
-These lines of code, which were responsible for instantiating the \texttt{TestCaseClassLoader} class, are then replaced by the invocation of \texttt{createLoader}. It interest to note that a new statement was also introduced in \texttt{createLoader} (line~18), which would result in one more duplicate line of code if the method was not extracted.
+These lines of code, which were responsible for instantiating the \texttt{TestCaseClassLoader} class, are then replaced by the invocation of \texttt{createLoader}. It interesting to note that a new statement was also introduced in \texttt{createLoader} (line~18), which would result in one more duplicate line of code if the method was not extracted.
 
 % https://github.com/junit-team/junit/commit/ebe724e4b925fca5c9aeb6f7e282a5f0ae132232?diff=split
 \begin{figure}[htbp]\centering
@@ -302,7 +302,7 @@ There are at least two threats to the internal validity of the study:
 To mitigate such a threat, we manually inspected a sample of the Extract Method instances we found. We choose 50 instances at random for manual inspection and assessed that 4 of them were false positives (92.0\% of precision).
 Additionally, there is the possibility that the tool does not detect all Extract Method instances applied (false negatives). Unfortunately, it is not feasible to assess the tool recall by manually inspecting the code changes.
 
-\item The validity of the results depends on the correctness of the method invocation analysis tooling developed specifically for this study. In fact, we believe that not every method invocation is identified for two reasons: (i) the methodology uses only static analysis and it is not able to identify method invocations relying on meta-programming features of the Java language and (ii) the JDT Core API is not able to resolve method invocation bindings in 100\% of the cases in the absence of the complete compilation dependencies.
+\item The validity of the results depends on the correctness of the method invocation analysis tooling developed specifically for this study. In fact, we believe that not every method invocation is identified for three reasons: (i) the methodology uses only static analysis and it is not able to identify method invocations relying on meta-programming features of the Java language, (ii) the JDT Core API is not able to resolve method invocation bindings in 100\% of the cases in the absence of the complete compilation dependencies, and (iii) extracted methods that are moved or renamed in a subsequent revision are not accounted for in the \emph{later reuse} scenario.
 Nevertheless, such issues would only result in an underestimation of the number of invocations. Therefore, the existence of false negatives would not undermine the finding that code reuse is a major motivation for Extract Method.
 \end{itemize}
 
@@ -323,7 +323,8 @@ In this study we analyzed 10,931 commits from 10 open-source Java projects to in
 In addition, we found a third scenario, \textbf{Later Reuse}, in which Extract Method refactoring favored long-term code reuse, even though there was no indication that this was the initial intention (4.8\% of cases).
 All three scenarios were found in virtually all systems analyzed in similar proportion.
 
-The results obtained indicate that it is incorrect to assume that Extract Method refactoring is always associated with the resolution of a bad smell, such as \emph{Long Method} or \emph{Duplicated Code}. Approximately half of the cases analyzed fall into the \textbf{Immediate Reuse} scenario, in which a developer refactors existing code to enable code reuse in new code he is working on when modifying the system. Such scenario may happen either when fixing a defect or implementing new functionality.
+The results obtained indicate that it is incorrect to assume that Extract Method refactoring is always associated with the resolution of an existing bad smell, such as \emph{Long Method} or \emph{Duplicated Code}. Approximately half of the cases analyzed fall into the \textbf{Immediate Reuse} scenario, in which a developer refactors existing code to enable code reuse in new code he is working on when modifying the system.
+From another perspective, this also suggests that developers avoid introducing duplication when fixing a defect or implementing new functionality.
 
 In particular, this observation has two implications for research on Extract Method recommendation approaches. First, regardless of the recommendation heuristic used, certain decisions made by a developer take into consideration the feature she will introduce to the system. Thus, it is quite challenging for a recommendation tool that relies only on the existing code to suggest an appropriate recommendation in these cases.
 %Therefore, this should be taken into account when evaluating the precision of a heuristic.

@@ -129,7 +129,7 @@ However, we can improve merging algorithms if we know the refactorings applied t
 For example, \cite{dig2008effective} proposed a refactoring-aware version control system that is able to resolve merge conflicts caused by refactorings using the following strategy: it identifies the refactorings applied between revisions, undo the refactorings, apply regular textual merge algorithms, and finally apply the refactorings again.
 As another example, \cite{cavalcanti2017evaluating} propose an improvement in semistructured merge algorithms that relies on the Levenshtein distance to find renamed code elements. This way, it avoids reporting merge conflicts when a developer renames a method whose body is changed by other developer in parallel.
 \cite{shen2019intellimerge} also propose a refactoring-aware merging technique based on a semistructured representation of the source code.
-Their tool, called IntelliMerge, first transforms the source code of each revision involved in the merge process into program element graphs (PEGs).
+Their tool, called IntelliMerge, first transforms the source code of each revision involved in the merge process into Program Element Graphs (PEGs).
 Then, nodes from these graphs are matched with their base version, i.e., in this step refactorings such as \emph{Move} and \emph{Rename} are found.
 Finally, textual merge is applied individually for each node, considering the matchings found in the previous step.
 The aforementioned tools depend on finding refactorings applied between revision. Thus, they are another direct application of refactoring detection approaches such as RefDiff.

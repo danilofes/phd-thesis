@@ -113,8 +113,10 @@ In this study, we collected refactorings from \studiedProjects different project
 \section{Research Methodology}
 \label{SecMethodology}
 
+In this section we describe our methodology. First, we detail how we selected the studied repositories (Section~\ref{study2:select-repos}). Second, we describe \toolName, the tool we used to find refactorings in version histories (Section~\ref{study2:tool}). Third, we discuss the study's design (Section~\ref{sec:study_design}). Last, we present statistics of the collected data (Section~\ref{study2:examined-data}).
 
 \subsection{Selection of GitHub Repositories}
+\label{study2:select-repos}
 
 First, we selected the top 1,000 Java repositories ordered by popularity in GitHub (stargazers count) that are not forks. From this initial list, we discarded the lower quartile ordered by number of commits, to focus the study on repositories with more maintenance activity. The final selection consists of \totalProjects repositories, including well-known projects, like {\textsc JetBrains/intellij-community}, {\textsc apache/cassandra}, {\textsc e\-lastic/elasticsearch}, {\textsc gwtproject/gwt}, and {\textsc spring-projects/spring-framework}.
 
@@ -147,10 +149,11 @@ These observations are statistically confirmed by applying the one-tailed varian
 
 
 \subsection{\toolName Tool}
+\label{study2:tool}
 
 In the study, we search for refactorings performed in the version history of the selected GitHub repositories by analyzing the differences between the source code of two revisions.
 For this purpose, we use a refactoring detection tool proposed in a previous work~\citep{tsantalis_empiricalstudy}.
-The tool, named \toolName in this study, implements a lightweight version of the UMLDiff~\citep{Xing:2005} algorithm for differencing  object-oriented models.
+The tool, named \toolName~0.1 in this study, implements a lightweight version of the UMLDiff~\citep{Xing:2005} algorithm for differencing  object-oriented models.
 This algorithm is used to infer the set of classes, methods, and fields added, deleted or moved between successive code revisions.
 After executing this algorithm, a set of rules is used to identify different types of refactorings.
 Unlike other existing refactoring detection tools, such as Ref-Finder~\citep{Kim:2010:RefFinder} and JDevAn~\citep{Xing:2008:JDevAn}, \toolName provides an API and can be used as an external library independently from an IDE,
@@ -162,7 +165,8 @@ and this could be achieved only by being able to use \toolName programmatically 
 
 
 In the study, we analyze \refactoringTypes well-known refactoring types detected by \toolName, as listed in the first column of Table~\ref{TabRefactoringActivity}.
-The detection of {\textsc Rename Class/Method/Field} refactorings is not currently supported by \toolName, because it requires a more advanced source code analysis that examines changes in usage patterns (i.e., changes in class instantiations, method call sites, field accesses, respectively) to verify the consistency of the renaming operation.
+The detection of {\textsc Rename Class/Method/Field} refactorings was not supported by \toolName at the time of this study.
+%, because it requires a more advanced source code analysis that examines changes in usage patterns (i.e., changes in class instantiations, method call sites, field accesses, respectively) to verify the consistency of the renaming operation.
 %and this would result in a significantly higher computation cost.
 Typically, these refactorings are performed to give a more meaningful name to the renamed code element. Previous studies show that they are usually performed automatically, using the refactoring tool support of popular IDEs~\citep{MurphyHill2012, negara2013}.
 
@@ -186,7 +190,7 @@ The lowest observed recall is for {\textsc Pull Up Method} (0.80), while the low
 
 In conclusion, the accuracy of \toolName is at acceptable levels,
 since Ref-Finder (the current state-of-the-art refactoring reconstruction tool)
-has an overall precision of 79\% according to the experiments conducted by its own authors~\citep{Prete:2010},
+has an overall precision of 79\% according to the experiments conducted by its own authors~\citep{prete2010template},
 while an independent study by \cite{Soares:2013} has shown an overall precision of 35\% and an overall recall of 24\% for Ref-Finder.
 
 \begin{table}[htb]
@@ -216,8 +220,9 @@ Suppose also that a refactoring $\mathit{ref}$ is performed in $C_A$, and theref
 $C_A$ with its parent commit.
 Because the effects of $\mathit{ref}$ are present in the code that resulted from $C_M$, $\mathit{ref}$ 
 would be detected again if we compared $C_M$ with $C_B$.
-Therefore, we assume that discarding merge commits from our analysis does not lead to any refactoring loss, but rather
-avoids duplicate refactoring reports.
+Although a developer may introduce arbitrary changes in $C_M$ (that are not in $C_A$ or $C_B$), $C_M$ is unlikely to contain additional refactorings.
+Thus, we assume that discarding merge commits from our analysis does not lead to significant  refactoring loss.
+
 
 
 On each working day, we retrieved the recent refactorings from the database to perform a manual inspection, using
@@ -261,11 +266,11 @@ This set of commits covers \studiedProjects different projects and contains \stu
 
 After collecting all responses, we analyzed the answers using thematic analysis~\citep{Cruzes:2011}, a technique for identifying and recording patterns (or \quotes{themes}) within a collection of documents.
 Thematic analysis involves the following steps: (1) initial reading of the developer responses, (2) generating initial codes for each response, (3) searching for themes among codes, (4) reviewing the themes to find opportunities for merging, and (5) defining and naming the final themes.
-These five steps were performed independently by the first two authors of the study,  with the support of a simple web interface we built to allow the analysis and tagging of the detected refactorings.
-At the time of the study, the first author (Author\#1) had 3 years of research experience on refactoring, while the second author (Author\#2) had over 8 years of research experience on refactoring.
+These five steps were performed independently by two validators,  with the support of a simple web interface we built to allow the analysis and tagging of the detected refactorings.
+At the time of the study, the first validator (Validator\#1) had 3 years of research experience on refactoring, while the second validator (Validator\#2) had over 8 years of research experience on refactoring.
 
-After the generation of themes from both authors, a meeting was held to assign the final themes. In 155 cases (58\%), both authors suggested semantically equivalent themes that were rephrased and standardized to compose the final set of themes. The refactorings with divergent themes were then discussed by both authors to reach a consensus. In 94 cases (35\%), one author accepted the theme proposed by the other author. In the remaining 18 cases (7\%), the final theme emerged from the discussion and was different from what both authors previously suggested.
-Figure~\ref{fig:consenus_example} shows a case of an {\textsc Extract Method} refactoring instance that was required to reach a consensus between the authors. The developer who performed the refactoring explained that the reason for the refactoring was to support a new feature that required pagination, as described in the following comment:\margin
+After the generation of themes from both validators, a meeting was held to assign the final themes. In 155 cases (58\%), both validators suggested semantically equivalent themes that were rephrased and standardized to compose the final set of themes. The refactorings with divergent themes were then discussed by both validators to reach a consensus. In 94 cases (35\%), one validator accepted the theme proposed by the other validator. In the remaining 18 cases (7\%), the final theme emerged from the discussion and was different from what both validators previously suggested.
+Figure~\ref{fig:consenus_example} shows a case of an {\textsc Extract Method} refactoring instance that was required to reach a consensus between the validators. The developer who performed the refactoring explained that the reason for the refactoring was to support a new feature that required pagination, as described in the following comment:\margin
 
 \noindent{\em\quotes{Educational part of PyCharm uses stepic.org courses provid\-er. This server recently decided to use pagination in replies.}}\margin
 
@@ -279,11 +284,11 @@ Figure~\ref{fig:consenus_example} shows a case of an {\textsc Extract Method} re
 By inspecting the source code changes, we can see that a part of the original method \texttt{getCourses()} (left-hand side of Figure~\ref{fig:consenus_example})
 was extracted into method \texttt{addCoursesFromStepic()} (right-hand side of Figure~\ref{fig:consenus_example}).
 After the refactoring, the extracted method is called twice, once before the \texttt{while} loop added in the original method, and once inside the \texttt{while} loop.
-For this reason, Author\#1 labeled this case as ``Avoid duplication'', since the extracted method is reused two times after the refactoring.
+For this reason, Validator\#1 labeled this case as ``Avoid duplication'', since the extracted method is reused two times after the refactoring.
 However, the extracted method contains additional new code to compute properly the URL based on the page number passed as a parameter (first line in the extracted method),
 and to return a \texttt{boolean} indicating if there exists a next page (last line in the extracted method).
-For this reason, Author\#2 labeled this case as ``Facilitate extension'', since the extracted method also helps to implement the new pagination requirement.
-After deliberation, the authors reached a consensus by keeping both theme labels, since the extracted method serves both purposes of reuse and extension.
+For this reason, Validator\#2 labeled this case as ``Facilitate extension'', since the extracted method also helps to implement the new pagination requirement.
+After deliberation, the validators reached a consensus by keeping both theme labels, since the extracted method serves both purposes of reuse and extension.
 
 
 
@@ -291,10 +296,11 @@ After deliberation, the authors reached a consensus by keeping both theme labels
 
 
 \subsection{Examined Refactorings}
+\label{study2:examined-data}
 
 We monitored \totalProjects Java projects during the study period, and found commits in \activeProjects projects (\activeProjectsPercentage), i.e., 277 projects remained inactive.
 We also found \refactoredProjects projects with refactoring activity, as detected by \toolName (including false positives).
-In these projects, \detectedRefactorings refactoring instances were detected (in \commitsWithDetectedRefactoring commits), and were manually inspected by the first author of the study to confirm whether they are indeed true positives.
+In these projects, \detectedRefactorings refactoring instances were detected (in \commitsWithDetectedRefactoring commits), and were manually to confirm whether they are indeed true positives.
  
 \begin{table}[ht]
 \centering
@@ -317,7 +323,7 @@ It should be emphasized that we asked the developers only about the true positiv
 In comparison to the results presented in Section~\ref{sec:precision_recall}, the precision is lower,
 because the commits analyzed from GitHub projects may include tangled changes, while the commits analyzed in Section~\ref{sec:precision_recall} include only refactoring operations.
 Tangled changes make the detection of refactorings more challenging, thus resulting in more false positives.
-Finally, Table~\ref{TabRefactoringActivity} shows the number of distinct commits (Com.) and projects (Proj.) 
+Finally, Table~\ref{TabRefactoringActivity} shows the number of distinct commits and projects 
 containing at least one true positive refactoring
 (\commitsWithTruePositiveRefactoring out of \commitsWithDetectedRefactoring commits and 185 out of \refactoredProjects projects with detected refactorings contain at least one true positive refactoring).
 
@@ -377,7 +383,7 @@ Section~\ref{sec:other:motivations} presents the motivations for the remaining r
 
 
 Table~\ref{TabExtractMethodMotivations} describes 11 motivations for {\textsc Extract Method} refactoring and the number of occurrences for each of them. 
-The most frequent motivation is to extract a reusable method (43 instances).
+The most frequent motivation is to extract a reusable method (43 instances), which is consistent with the first finding from Study~1 (see Section~\ref{study1:rq1}).
 In this case, the refactoring is motivated by the immediate reuse of a piece of code
 in multiple other places, in addition to the place from which it was originally extracted.
 We often observe a concern among developers to reuse code wherever possible, by extracting pieces of reusable code.
@@ -670,6 +676,7 @@ For instance, \emph{extract reusable method}, \emph{introduce alternative method
 are among the most frequent motivations, and all of them involve enhancing the functionality of the system.
 Therefore, {\textsc Extract Method} is a key operation to complete other
 maintenance tasks, such as adding a feature or fixing a bug.
+In particular, \emph{extract reusable method} was the most frequent motivation, confirming the findings from Study~1, which shows that code reuse is a major motivation for Extract Method.
 In contrast, only two out of the 11 motivations we found (\emph{decompose method to improve readability} and \emph{remove duplication}) are targeting code smells. % 35/138 = 25\% os total instances
 This finding could motivate researchers and tool builders to design
 refactoring recommendation systems~\citep{Tsantalis:2011, Silva:2014, Tairas:2012, Hotta:2012, Meng:2015, Tsantalis:2015}
@@ -796,7 +803,7 @@ Notably, we have a limited number of motivation themes
 for less frequent refactoring types, such as {\textsc Push Down Method/Attribute} and {\textsc Extract 
 Interface}.
 Third, to mitigate inconsistencies in the proposed themes, we rely on an initial classification
-performed independently by two authors of the study, followed by a consensus building process.
+performed independently by two evaluators, followed by a consensus building process.
 We also make publicly available the responses collected from the developers and the proposed
 refactoring motivation themes to provide a means for replication and verification.
 
@@ -809,7 +816,7 @@ In summary, the main conclusions and lessons learned are:
 	%\setlength\itemsep{0mm}
 	\item Refactoring activity is mainly driven by changes in the requirements (i.e., new feature and bug fix requests)
 	and much less by code smell resolution.
-	Only 2 out of the 11 motivations for {\textsc Extract Method} were related to code smell resolution (\emph{remove duplication}, \emph{decompose method}) covering only 25\% (35/138) of the motivation instances.
+	Only 2 out of the 11 motivations for {\textsc Extract Method} were related to fixing existing code smells (\emph{remove duplication}, \emph{decompose method}) covering only 25\% (35/138) of the motivation instances. Nevertheless, developers frequently avoid introducing code smells, such as duplicate code.
 	%Research on refactoring recommendation systems should refocus from code-smell-oriented to maintenance-task-oriented solutions.
 	\item {\textsc Extract Method} is a key operation that serves multiple purposes, specially those related to code
 	reuse and functionality extension. It is also used to improve the testability of code, and deprecate public API methods.
@@ -820,7 +827,7 @@ In summary, the main conclusions and lessons learned are:
 	\item Manual refactoring is still prevalent (55\% of the developers refactored manually the code).
 	In particular, inheritance related refactoring tool support seems to be the most under-used (only 10\% done automatically),
 	while {\textsc Move Class} and {\textsc Rename Package} are the most trusted refactorings (over 50\% done automatically).
-	\item The IDE plays an important role in the adoption of refactoring tool support. IntelliJ IDEA users perform more automated refactorings (71\% done automatically) than Eclipse users (44\%) and Netbeans users (50\%).
+	\item The IDE plays an important role in the adoption of refactoring tool support. IntelliJ IDEA users perform more automated refactorings (71\% done automatically) than Eclipse users (44\%) and NetBeans users (50\%).
 	\item Compared to the study by \cite{MurphyHill2012}, it seems that developers apply more automated refactorings nowadays.
 	Our findings confirm \cite{negara2013} who collected data only from Eclipse IDE users, but our study covers developers using more IDEs.
 	%\item Developers often apply refactorings manually, because they consider refactoring tool support unreliable or unnecessary. 
@@ -829,7 +836,7 @@ In summary, the main conclusions and lessons learned are:
 
 Based on our findings, we propose that future research on refactoring recommendation systems should refocus from 
 code-smell-oriented to maintenance-task-oriented solutions.
-This could be achieved by leveraging the recent advancements in feature location~\citep{Dit:2013} and requirements tracing to automatically locate the code
+This could be achieved by leveraging feature location~\citep{Dit:2013} and requirements tracing to automatically locate the code
 associated with a feature or bug fix request, or a requirement change, and recommend suitable refactorings that will make easier the completion
 of the maintenance task.
 We strongly believe this will boost the adoption of recommendation systems by the developers.
@@ -872,7 +879,7 @@ The dataset includes a list of 539 commits from 185 GitHub-hosted Java projects 
 
 
 Additionally, the dataset includes a list of 222 commits with 463 refactorings and their motivations.
-This is the subset of the commits with refactorings where the developers answered to our mails, describing the reasons for performing the detected refactorings. The motivation theme for each refactoring was proposed after analyzing all developers' answers using thematic-analysis. The dataset contains details of the themes assigned by each one of the two authors that independently analyzed each commit, and also the final themes derived after a discussion phase to reach a consensus.
+This is the subset of the commits with refactorings where the developers answered to our mails, describing the reasons for performing the detected refactorings. The motivation theme for each refactoring was proposed after analyzing all developers' answers using thematic-analysis. The dataset contains details of the themes assigned by each evaluator that independently analyzed each commit, and also the final themes derived after a discussion phase to reach a consensus.
 Moreover, the dataset also includes information about the IDE used to perform the refactorings (if reported by the developer). In case the refactoring is performed manually, we also include a possible reason for not using the IDE refactoring tool support.
 
 
@@ -889,10 +896,10 @@ The dataset is available as a navigable web site, where researchers and practiti
 %and for any purpose
 provided that it is properly attributed.\\
 
-\noindent{Danilo Silva, Nikolaos Tsantalis, Marco Tulio Valente. Why We Refactor? Confessions of GitHub Contributors. In \textit{Proceedings of the 24th International Symposium on the Foundations of Software Engineering} (FSE), 2016.}
+\noindent{Danilo Silva, Nikolaos Tsantalis, Marco Tulio Valente. Why We Refactor? Confessions of GitHub Contributors. In \textit{Proceedings of the 24th International Symposium on the Foundations of Software Engineering} (FSE), pages 858-870, 2016.}
 
 
-\subsection{How to contribute}
+\subsection{How to contribute?}
 
 Researchers are welcome to contribute to this dataset either reporting issues or submitting new data from different projects or commits. Such contributions should be made via GitHub \emph{issues} or \emph{pull requests} in the following repository:\margin
 

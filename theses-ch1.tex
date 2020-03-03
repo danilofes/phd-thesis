@@ -31,7 +31,7 @@ For example, \cite{Fowler:1999} describes typical reasons or code smells that mo
 Moreover, there may be other motivations driving refactorings other than those  documented in refactoring catalogues.
 Although existing studies interview professional software developers asking the reasons that motivate their refactoring activities~\citep{kim-tse-2014, Wang:2009}, they discuss the issue in a broader manner.
 
-In fact, empirical studies that investigates actual refactorings applied in source code are challenging, because refactoring information is not readily available.
+In fact, empirical studies that investigate actual refactorings applied in source code are challenging, because refactoring information is not readily available.
 For example, suppose that we intend to study the correlation between refactorings and defects on a software component. 
 Many software teams document fixed bugs in issue tracking systems, but we could only correlate them with refactorings if we have a history of refactoring activity in the defective code.
 Such information is usually not documented, and would have to be inferred from the code changes.
@@ -53,7 +53,7 @@ Thus, analyzing code changes to find refactorings is challenging, because code e
 For example, a developer may add more code to an existing method to implement a new feature, and then decide to move it to another class that is more related to it.
 Identifying that the method has been moved is more challenging in this case, because it is not identical to its original version.
 In fact, existing approaches that detect refactorings by analyzing code changes have precision and recall issues when used in practice.
-For example, in a study conducted by \cite{Soares:2013}, Ref-Finder~\citep{Prete:2010,Kim:2010:RefFinder}, one well-known refactoring detection approach, achieved only 35\% of precision and 24\% of recall.
+For example, in a study conducted by \cite{Soares:2013}, Ref-Finder~\citep{prete2010template,Kim:2010:RefFinder}, one well-known refactoring detection approach, achieved only 35\% of precision and 24\% of recall.
 
 \item Refactorings are not always performed using automated support.
 Therefore, even if we monitor refactoring tools usage, we may miss a significant portion of the refactoring activity.
@@ -96,7 +96,7 @@ For example, in Study~2, we manually evaluated each refactoring identified by ou
 For that reason, we initiated a second line of research, focusing on improving the state-of-the-art on refactoring detection approaches.
 %To answer that question, we performed two empirical studies.
 
-First, we introduced \textbf{RefDiff}, a novel refactoring detection approach, whose main goal was to improve improve precision over existing tools.
+First, we introduced \textbf{RefDiff}, a novel refactoring detection approach, whose main goal was to improve precision over existing tools.
 Our approach employs a combination of heuristics based on static analysis and code
 similarity to detect 13 well-known refactoring types.
 One of its distinguishing features is using an adaptation of the classical TF-IDF similarity measure from information retrieval to compute code similarity.
