@@ -816,6 +816,12 @@
   \if@selfdoc
     \setbox0=\hbox{%
   \fi
+  
+  \begin{tabular}{p{12.5cm}}
+    Ficha catalogr\'{a}fica elaborada pela bibliotec\'{a}ria Belkiz Inez Rezende Costa CRB 6\textordfeminine{} Regi\~{a}o n\textordmasculine{} 1510\\
+  \end{tabular}
+  \vspace{0.5cm}
+  
   \fbox{%
   \begin{minipage}{\ppgcc@l@fc@width}
     \begin{tabular}%
@@ -823,16 +829,16 @@
       @{\hspace{\ppgcc@fc@realcolsep}}%
       >{\raggedright\arraybackslash}%
       p{\ppgcc@l@fc@seccolwidth}@{}}
-      & \ppgcc@authorrev
+      & \ppgcc@authorrev.
         \\[\ppgcc@fc@bigsep]
       \@ifundefined{ppgcc@cutter}{}{\ppgcc@cutter}%
       & \hspace*{\ppgcc@fc@parindent}%
-        \ppgcc@titlenobreak{} / \@author\space --- \@address, \ppgcc@year.
+        Mining refactorings from version histories: studies, tools, and
+applications/ \@author\space --- \@address, \ppgcc@year.
         \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \roman{ppgcc@fc@frontpages}, \arabic{lastpage} f.~%
-        \if@fc@hasil : il.~\fi
-        ; 29cm.
+        \if@fc@hasil il.\fi ; 29 cm.
         \\[\ppgcc@fc@bigsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \ifppgcc@phd
@@ -850,7 +856,7 @@
     \end{tabular}
     \@ifundefined{ppgcc@cdu}{}{%
       \vspace{\ppgcc@fc@bigsep}\par
-      {\centering
+      {\raggedleft
         CDU \ppgcc@cdu
       \par}%
     }%
