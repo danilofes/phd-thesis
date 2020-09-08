@@ -248,7 +248,7 @@ In the light of the results presented in previous sections, we propose three dis
 \item[Duplication:] In this scenario, a developer identifies duplicated code in two or more places in the system and applies Extract Method to fix the issue, replacing the duplicated code with a method invocation.
 Therefore, the refactoring is applied to fix the \emph{Duplicated Code} bad smell, which is a classical motivation for Extract Method, as documented in the refactoring literature~\citep{Fowler:1999}.
 Figure~\ref{iexdup} presents an example of this scenario in \textit{junit} project. A developer extracted the method \texttt{createLoader}, encapsulating a piece of duplicated code in methods \texttt{load} (lines~8--9) and \texttt{reload} (lines~12--13).
-These lines of code, which were responsible for instantiating the \texttt{TestCaseClassLoader} class, are then replaced by the invocation of \texttt{createLoader}. It interesting to note that a new statement was also introduced in \texttt{createLoader} (line~18), which would result in one more duplicate line of code if the method was not extracted.
+These lines of code, which were responsible for instantiating the \texttt{TestCaseClassLoader} class, are then replaced by the invocation of \texttt{createLoader}. It is interesting to note that a new statement was also introduced in \texttt{createLoader} (line~18), which would result in one more duplicate line of code if the method was not extracted.
 
 % https://github.com/junit-team/junit/commit/ebe724e4b925fca5c9aeb6f7e282a5f0ae132232?diff=split
 \begin{figure}[htbp]\centering
