@@ -827,12 +827,12 @@
         \\[\ppgcc@fc@bigsep]
       \@ifundefined{ppgcc@cutter}{}{\ppgcc@cutter}%
       & \hspace*{\ppgcc@fc@parindent}%
-        \ppgcc@titlenobreak{} / \@author.\space --- \@address, \ppgcc@year
+        \ppgcc@titlenobreak{} / \@author\space --- \@address, \ppgcc@year.
         \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \roman{ppgcc@fc@frontpages}, \arabic{lastpage} f.~%
         \if@fc@hasil : il.~\fi
-        ; 29cm
+        ; 29cm.
         \\[\ppgcc@fc@bigsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \ifppgcc@phd
@@ -840,10 +840,10 @@
         \else
           Disserta\c{c}\~{a}o (mestrado)
         \fi
-        --- \ppgcc@fcuniversity
+        - Universidade Federal de Minas Gerais -- Departamento de Ci\^{e}ncia da Computa\c{c}\~{a}o;
         \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
-        Orientador: \ppgcc@advisorname
+        Orientador: \ppgcc@advisorname.
         \\[\ppgcc@fc@bigsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \ppgcc@indexkeys
