@@ -1,7 +1,9 @@
-\documentclass[phd]{ppgccufmg} % ou [msc] para dissertações
+\documentclass[oneside,phd]{ppgccufmg} % ou [msc] para dissertações
 % de mestrado. Para propostas ou
 % projetos, usar [phd,project],
 % [msc,proposal], etc.
+
+\usepackage[a-2b]{pdfx}
 
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -40,7 +42,17 @@
 \newcommand{\commitsWithRefactoringAndResponse}[0]{222\xspace} % should be equal to variable studiedDevelopers
 
 
-\usepackage[english,bookmarks=true,bookmarksnumbered=true,linktocpage,colorlinks=true,citecolor=black,urlcolor=black,linkcolor=black,filecolor=black]{hyperref}
+%\usepackage[pdftex,pdfa,pdfversion=1.4,english,bookmarks=true,bookmarksnumbered=true,linktocpage,colorlinks=true,citecolor=black,urlcolor=black,linkcolor=black,filecolor=black]{hyperref}
+
+\hypersetup{
+english,
+bookmarksnumbered=true,
+linktocpage,colorlinks=true,
+citecolor=black,
+urlcolor=black,
+linkcolor=black,
+filecolor=black
+}
 
 \usepackage{minibar}
 
